@@ -285,7 +285,7 @@ class TuniuCrawler(BaseCrawler):
             return self._saved_cookies
         out = {}
         try:
-            with self.browser() as ctx:
+            with self.browser(headless=True) as ctx:
                 page = self.new_page(ctx)
                 page.goto("https://m.tuniu.com/flight/",
                           wait_until="domcontentloaded", timeout=20000)
@@ -384,26 +384,27 @@ class TuniuCrawler(BaseCrawler):
             uniq.setdefault(k, r)
         return list(uniq.values())
 
-    def _fetch_pc_dom(self, fc: str, tc: str, dates: List[str]) -> dict:
-        """途牛 PC 国内列表（登录墙之外的匿名明细通路）。"""
+    def _fetch_pc_dom(self, fc: str, tc: str, dates: List[str],
+                      headless=None, path_label: str = "PC") -> dict:
+        """途牛 PC 国内列表；headless 失败时由调用方复用可见会话重试。"""
         out = {}
         bak = self.use_mobile
         self.use_mobile = False
         try:
-            with self.browser() as ctx:
+            with self.browser(headless=headless) as ctx:
                 page = self.new_page(ctx)
                 for date in dates:
                     url = self.PC_URL_TPL.format(fc=fc, tc=tc, date=date)
                     t0 = time.time()
                     try:
                         page.goto(url, wait_until="domcontentloaded", timeout=45000)
-                        page.wait_for_selector(".J-flightlist", timeout=18000)
+                        page.wait_for_selector(".J-flightlist", state="attached", timeout=18000)
                         page.wait_for_timeout(1200)
                         items = page.evaluate(self.PC_ITEMS_JS) or []
                         out[date] = self._parse_pc_items(items, date)
                         self._debug_snapshot(page, f"tuniu_pc_{fc}{tc}_{date}",
                                              extra_text=page.inner_text("body"))
-                        self.path_note("PC", "ok" if out[date] else "empty",
+                        self.path_note(path_label, "ok" if out[date] else "empty",
                                        rows=len(out[date]), date=date,
                                        ms=int((time.time() - t0) * 1000),
                                        detail="flight.tuniu.com 国内列表")
@@ -416,12 +417,23 @@ class TuniuCrawler(BaseCrawler):
                             _body = ""
                         _blocked = bool(re.search(
                             r"验证码|人机验证|滑动验证|拖动|安全验证|拼图", _body))
+                        if not _blocked:
+                            try:
+                                _blocked = bool(page.evaluate(
+                                    "() => !!document.querySelector("
+                                    "'[class*=captcha],[class*=verify],"
+                                    "[id*=captcha],[class*=slide],[class*=drag]')"))
+                            except Exception:
+                                pass
                         self.path_note(
-                            "PC", "blocked" if _blocked else "error",
+                            path_label, "blocked" if _blocked else "error",
                             date=date,
-                            detail=("人机验证页，需在渠道登录窗口完成验证"
+                            detail=("人机验证页（滑块），需在渠道登录窗口完成验证"
                                     if _blocked else str(e)[:120]),
                             ms=int((time.time() - t0) * 1000))
+                        if _blocked:
+                            # 同一 profile 连续请求只会加重风控，遇到滑块即停。
+                            break
                     self._sleep()
         finally:
             self.use_mobile = bak
@@ -928,13 +940,30 @@ class TuniuCrawler(BaseCrawler):
             return self._fetch_intl(from_city, to_city, dates,
                                     ret_date=ret_date)
         results: List[FlightPrice] = []
-        fc, tc = from_city.upper(), to_city.upper()
+        # 途牛国内列表/接口使用城市码（北京=BJS），机场码 PEK 会落空；
+        # 与飞猪/携程国内同律先归并城市码，FlightPrice 仍保留原航线。
+        fc, tc = airport_city_code(from_city.upper()), airport_city_code(to_city.upper())
         pc_map = {}
         if not ret_date:
             try:
                 pc_map = self._fetch_pc_dom(fc, tc, dates)
             except Exception as e:
                 self.logger.warning("[tuniu] PC 列表异常，回退 H5/API: %s", e)
+                pc_map = {}
+            # 无痕 profile 会触发滑块；复用已保存的可信会话开可见窗口
+            # 再取一次（不破解验证码；仍被挑战则如实落 blocked）。
+            missing = [d for d in dates if not (pc_map.get(d) or [])]
+            # 可见窗口只在用户主动探针时兜底；定时监控不弹窗。
+            if missing and getattr(self, "probe_mode", False):
+                try:
+                    self.logger.info("[tuniu] PC 无明细，复用已保存会话可见窗口重试 %d 日", len(missing))
+                    headed = self._fetch_pc_dom(fc, tc, missing, headless=False,
+                                                path_label="PC可见")
+                    for d in missing:
+                        if headed.get(d):
+                            pc_map[d] = headed[d]
+                except Exception as e:
+                    self.logger.warning("[tuniu] PC 可见窗口重试失败: %s", e)
         for date in dates:
             pc_rows = pc_map.get(date) or []
             if pc_rows:

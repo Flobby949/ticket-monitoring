@@ -349,7 +349,7 @@ while all other channels stay available. All assets attach to one Release and a
 ## Development
 
 ```bash
-PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python -m pytest tests/ -q   # full suite: 3477 tests — per-channel parsing units (placeholder guards / pass-through lenses / aggregation safeties) + push-pipeline dry runs + link-provenance gate + chart-vs-list consistency + version gate
+PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python -m pytest tests/ -q   # full suite: 3492 tests — per-channel parsing units (placeholder guards / pass-through lenses / aggregation safeties) + push-pipeline dry runs + link-provenance gate + chart-vs-list consistency + version gate
 python docs/uitest.py             # full UI self-test (602 assertions, self-hosted demo, zero-JS-error hard gate)
 python docs/screenshot.py         # regenerate README screenshots (start the demo first: python webui.py --demo --port 8799)
 python docs/demo_build.py         # rebake the static demo site (docs/site)

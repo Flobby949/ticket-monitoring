@@ -191,7 +191,9 @@ class FliggyCrawler(BaseCrawler):
             return self._fetch_intl(from_city, to_city, dates,
                                     ret_date=ret_date)
         results: List[FlightPrice] = []
-        fc, tc = from_city.upper(), to_city.upper()
+        # 飞猪国内搜索入参是城市码（北京=BJS），机场码 PEK 会落到
+        # “入参校验失败：三字码查不到城市信息”；国际同样先归并城市码。
+        fc, tc = airport_city_code(from_city.upper()), airport_city_code(to_city.upper())
         for date in dates:
             t0 = time.time()
             flights = self._fetch_pc(fc, tc, date)

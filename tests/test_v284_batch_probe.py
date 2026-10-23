@@ -143,7 +143,8 @@ def test_batch_probe_ui_wiring():
     assert "function srxProbeAddLeg()" in src
     assert "function srxProbeRunBatch()" in src
     assert "function srxShownRows(rows)" in src
-    assert "body:JSON.stringify(payload)" in src and "/api/probe/start" in src
+    assert "body:JSON.stringify(_p)" in src and "/api/probe/start" in src
+    assert "if(o.retry)_p.retry=true" in src
     assert "if(SRX.probe&&SRX.probe.batch){" in src and "let a=srxAll();" in src
     assert "组合探针 · 未入库" in src
     assert "function srxTaskStart(payload,opts)" in src
@@ -312,5 +313,5 @@ def test_neutral_state_and_task_ui_pins():
     assert "function srxTaskStart(payload,opts)" in src
     assert "function srxTaskCancel()" in src and "function srxTaskRetry()" in src
     assert "SRX_TASK_ROWS_SEEN" in src and "/api/probe/start" in src
-    assert "本次渠道状态" in src and "仅日历参考" in src
+    assert "本次渠道产物" in src and "仅日历" in src and "会话" in src
     assert "#searchview.srx-probe-on .srx-brief" in src

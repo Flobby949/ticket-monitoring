@@ -47,6 +47,7 @@ class TestWebuiV1555Pins:
         c = len(re.findall(r"</div\b", page))
         # r325：城市面板「🌐 国际目的地」页签（cp-sec/lhead/grid 三容器）
         # +3 对；R34：scope 分 Tab 行（cfgScopeBar 容器）+1 对；
+        # r366 探针查询行/渠道行/KPI 次级行 +1 对 = 993/993；
         # 后续并行 r326 对账至 391/391（含 cptabs 等后续增量）；
         # r339 双特性对账至 426/426（Bark 通道卡 chcard+4 srow、
         # 往返返程日期 chips 行 srow、渠道徽标 glab 增量）；
@@ -82,7 +83,7 @@ class TestWebuiV1555Pins:
         # +3 对、矩阵身份格 fname/fsub +1 对 = 977/977；v285 任务面板
         # （panel/sum/body/legs/evbar/events）+6 对、恢复条 +1 对 = 984/984
         # （运行期任务行/事件模板另计，不在 PAGE 字面）
-        assert (o, c, o - c) == (992, 992, 0)
+        assert (o, c, o - c) == (993, 993, 0)
 
     def test_dingtalk_card_closed_before_ntfy(self):
         """钉钉卡闭合补钉字面在位，且位于 ntfy 卡开标签之前（顺序钉死）。"""

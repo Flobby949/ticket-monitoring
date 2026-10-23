@@ -5164,6 +5164,8 @@ html[data-theme="dark"] .bic-plane{filter:none!important}
   #cfgglobals .glgrid .glcell:only-child>.gsub{grid-column:2;grid-row:2;margin-top:2px}
  }
  @media(max-width:900px){
+  /* 平板固定 56px 日格：14 天总宽恒超容器，保留可发现的横滑暗示 */
+  #searchview .srx-band-days{grid-template-columns:repeat(14,56px)}
   #searchview .srx-probe:not(.open) .srx-probehead>span,
   #searchview .srx-probe:not(.open) .srx-probehead>em{display:none}
   #searchview .srx-probe:not(.open) .srx-probehead{margin-bottom:0}
@@ -5966,6 +5968,56 @@ html[data-theme="dark"] .bic-air{box-shadow:0 0 0 1px rgba(255,255,255,.18)!impo
  *,*::before,*::after{scroll-behavior:auto!important}
 }
 #montab-details .tabs>#fltBtn:focus-visible{box-shadow:inset 0 0 0 2px var(--blue),0 0 0 4px var(--card)!important}
+/* r366 探针快照/结果筛选分离与查询区重排 */
+#searchview .srx-probeform{display:flex;flex-direction:column;align-items:stretch;gap:6px}
+#searchview .srx-qrow{display:flex;align-items:center;gap:6px;flex-wrap:wrap;width:100%;min-width:0}
+#searchview .srx-qrow>label{display:inline-flex;align-items:center;gap:4px;font-size:10px;color:var(--mut);min-width:0}
+#searchview .srx-qrow>label input{width:118px;height:30px;border:1px solid var(--ctlbd);border-radius:7px;background:var(--card);color:var(--tx);padding:0 8px;font-size:12px}
+#searchview .srx-qrow>label input[type=date]{width:138px}
+#searchview .srx-qrow .arr{font-size:11px;color:var(--mut)}
+#searchview .srx-crow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding-top:5px;border-top:1px solid var(--line);min-width:0}
+#searchview .srx-crow-lab{font-size:11px;color:var(--tx2);white-space:nowrap}
+#searchview .srx-crow-lab small{font-size:12px;color:var(--mut);font-weight:400;margin-left:4px}
+#searchview .srx-crow-hint{font-size:12px;color:var(--mut);margin-left:auto;white-space:nowrap}
+#searchview .srx-crow .srx-platpick{flex:0 1 auto}
+#searchview .srx-probe-mini{display:none;font-size:11px;color:var(--tx2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:52%}
+#searchview .srx-probe.open .srx-probe-mini{display:none!important}
+#searchview .srx-probe:not(.open) .srx-probehead{margin-bottom:0;gap:6px}
+#searchview .srx-probe:not(.open) .srx-probehead>span:not(.srx-probe-mini){display:none}
+#searchview .srx-probe:not(.open) .srx-probe-mini{display:inline-block}
+#searchview .srx-probe:not(.open) .srx-batchtoggle{display:none}
+#searchview .srx-probe:not(.open) .srx-taskpanel{display:none}
+#searchview .srx-probe:not(.open){padding:5px 12px}
+#searchview .srx-task-stage{font-size:11px;color:var(--tx2);white-space:nowrap}
+#searchview .srx-task-upd{font-size:10px;color:var(--mut);white-space:nowrap}
+#searchview .srx-task-evbar select{height:24px;border:1px solid var(--ctlbd);border-radius:5px;background:var(--card);color:var(--tx2);font-size:10px;padding:0 4px}
+#searchview .srx-task-evbar .srx-ev-latest{height:24px;padding:0 8px;border:1px solid var(--blue);border-radius:5px;background:transparent;color:var(--blue);font-size:10px;cursor:pointer}
+#searchview .srx-snap{display:inline-flex;align-items:center;gap:6px;flex:1 1 100%;min-width:0;padding:3px 7px;border:1px solid var(--line);border-radius:6px;background:var(--srx-soft);font-size:11px;color:var(--tx2)}
+#searchview .srx-snap b{font-size:10px;color:var(--mut);font-weight:600;letter-spacing:.04em}
+#searchview .srx-snap span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#searchview .srx-snap button{height:22px;padding:0 7px;border:1px solid var(--ctlbd);border-radius:5px;background:var(--card);color:var(--blue);font-size:10px;cursor:pointer;margin-left:auto;white-space:nowrap}
+#searchview .srx-resf{display:inline-flex;align-items:center;gap:4px;flex-wrap:wrap;min-width:0}
+#searchview .srx-resf>b{font-size:12px;color:var(--mut);font-weight:600;letter-spacing:.04em}
+#searchview .srx-resf .none{font-size:11px;color:var(--mut)}
+#searchview .srx-chip.snap{cursor:default;background:var(--srx-soft);border-style:dashed}
+#searchview .srx-chip-note{font-size:10px;color:var(--mut);margin-left:2px}
+#searchview .srx-audit{grid-template-columns:repeat(4,minmax(0,1fr))}
+#searchview .srx-kpi-sub{grid-column:1/-1;font-size:11px;color:var(--mut);padding:0 2px 1px;line-height:1.5}
+#searchview .srx-band.compact{padding:4px 11px 5px}
+#searchview .srx-band.compact .srx-band-h{margin-bottom:2px}
+#searchview .srx-band.compact .srx-band-days{display:block;min-height:0;padding:0;overflow:visible}
+#searchview .srx-band.compact .srx-band-note{display:none}
+#searchview .srx-probe .srx-probestatus:not(.ok):not(.warn):not(.err){display:none}
+@media(max-width:900px){
+ #searchview .srx-qrow>label{flex:1 1 45%;flex-direction:column;align-items:flex-start;gap:2px;white-space:nowrap}
+ #searchview .srx-qrow>label input,#searchview .srx-qrow>label input[type=date]{width:100%}
+ #searchview .srx-qrow .arr{display:none}
+ #searchview .srx-crow-lab{flex:1 1 100%}
+ #searchview .srx-crow-hint{display:none}
+ #searchview .srx-crow .srx-platpick{width:100%}
+ #searchview .srx-probe-mini{max-width:100%;flex:1 1 100%;order:6}
+ #searchview .srx-audit{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
 </style></head><body><div class="wrap">
 <svg class="svgdefs" aria-hidden="true" focusable="false"><defs>
  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M2 20h20"/></symbol>
@@ -6302,32 +6354,38 @@ html[data-theme="dark"] .bic-air{box-shadow:0 0 0 1px rgba(255,255,255,.18)!impo
  </section>
 
  <section class="srx-probe open" id="srxProbe" aria-label="主动探针">
-  <div class="srx-probehead"><b>主动探针</b><span>输入出发/到达/日期，实时并发真实渠道采集 · 不入库、不推送</span><em id="srxProbeMode">监控数据</em>
+  <div class="srx-probehead"><b>主动探针</b><span>输入出发/到达/日期，实时并发真实渠道采集 · 不入库、不推送</span><span class="srx-probe-mini" id="srxProbeMini"></span><em id="srxProbeMode">监控数据</em>
    <button type="button" class="srx-probe-toggle" id="srxProbeToggle" onclick="srxToggleProbe()" aria-expanded="true">收起</button>
    <button type="button" class="srx-batchtoggle" id="srxBatchToggle" onclick="srxBatchToggle()" aria-expanded="false">组合 0/4</button>
    <button type="button" class="srx-taskbtn" id="srxTaskBtn" onclick="srxTaskOpen()" style="display:none">进度 <b id="srxTaskBtnN">0/0</b></button>
    <button type="button" class="srx-btn ghost" onclick="srxOpenSessions()" style="height:26px;padding:0 8px;font-size:11px">探针会话</button></div>
   <div class="srx-probeform">
-   <label class="srx-field srx-fromfield" for="srxFrom"><span class="srx-flab">出发</span>
-    <span class="srx-citybox"><input id="srxFrom" autocomplete="off" placeholder="上海 / SHA" aria-label="出发城市" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="srxFromDrop" onfocus="srxCityFocus(this)" onclick="srxCityFocus(this)" oninput="srxCityInput(this)" onkeydown="srxCityKey(event,this)" onchange="srxCityChanged(this)" onfocusout="srxCityBlur(this)">
-     <button type="button" class="srx-citychev" data-citytoggle="1" onclick="srxOpenCityPanel('srxFrom')" aria-label="浏览全部出发城市" title="浏览全部城市"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
-     <div class="srx-citydrop" id="srxFromDrop" role="listbox" aria-label="出发城市建议" hidden></div>
-    </span></label>
-   <span class="arr" aria-hidden="true">→</span>
-   <label class="srx-field srx-tofield" for="srxTo"><span class="srx-flab">到达</span>
-    <span class="srx-citybox"><input id="srxTo" autocomplete="off" placeholder="曼谷 / BKK" aria-label="到达城市" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="srxToDrop" onfocus="srxCityFocus(this)" onclick="srxCityFocus(this)" oninput="srxCityInput(this)" onkeydown="srxCityKey(event,this)" onchange="srxCityChanged(this)" onfocusout="srxCityBlur(this)">
-     <button type="button" class="srx-citychev" data-citytoggle="1" onclick="srxOpenCityPanel('srxTo')" aria-label="浏览全部到达城市" title="浏览全部城市"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
-     <div class="srx-citydrop" id="srxToDrop" role="listbox" aria-label="到达城市建议" hidden></div>
-    </span></label>
-   <label class="srx-field srx-datefield" for="srxDate"><span class="srx-flab">日期</span><input type="date" id="srxDate" aria-label="出发日期"></label>
-   <button type="button" class="go" id="srxGo" onclick="srxProbeRun()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 12h15"/><path d="m13 6 6 6-6 6"/></svg>实时探针</button>
-   <button type="button" class="exit" id="srxExitProbe" onclick="srxExitProbe()" style="display:none">退出探针</button>
-   <div class="srx-platpick" id="srxPlatPick" role="group" aria-label="探针渠道（优先级：携程、去哪儿、飞猪、同程、途牛）" title="渠道优先级：携程 > 去哪儿 > 飞猪 > 同程 > 途牛">
-    <label class="srx-pchip" data-p="ctrip" style="--pc:var(--c-ctrip)"><input type="checkbox" value="ctrip" checked><span class="dot" aria-hidden="true"></span>携程</label>
-    <label class="srx-pchip" data-p="qunar" style="--pc:var(--c-qunar)"><input type="checkbox" value="qunar" checked><span class="dot" aria-hidden="true"></span>去哪儿</label>
-    <label class="srx-pchip" data-p="fliggy" style="--pc:var(--c-fliggy)"><input type="checkbox" value="fliggy" checked><span class="dot" aria-hidden="true"></span>飞猪</label>
-    <label class="srx-pchip" data-p="tongcheng" style="--pc:var(--c-tongcheng)"><input type="checkbox" value="tongcheng" checked><span class="dot" aria-hidden="true"></span>同程</label>
-    <label class="srx-pchip" data-p="tuniu" style="--pc:var(--c-tuniu)"><input type="checkbox" value="tuniu" checked><span class="dot" aria-hidden="true"></span>途牛</label>
+   <div class="srx-qrow">
+    <label class="srx-field srx-fromfield" for="srxFrom"><span class="srx-flab">出发</span>
+     <span class="srx-citybox"><input id="srxFrom" autocomplete="off" placeholder="上海 / SHA" aria-label="出发城市" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="srxFromDrop" onfocus="srxCityFocus(this)" onclick="srxCityFocus(this)" oninput="srxCityInput(this)" onkeydown="srxCityKey(event,this)" onchange="srxCityChanged(this)" onfocusout="srxCityBlur(this)">
+      <button type="button" class="srx-citychev" data-citytoggle="1" onclick="srxOpenCityPanel('srxFrom')" aria-label="浏览全部出发城市" title="浏览全部城市"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+      <div class="srx-citydrop" id="srxFromDrop" role="listbox" aria-label="出发城市建议" hidden></div>
+     </span></label>
+    <span class="arr" aria-hidden="true">→</span>
+    <label class="srx-field srx-tofield" for="srxTo"><span class="srx-flab">到达</span>
+     <span class="srx-citybox"><input id="srxTo" autocomplete="off" placeholder="曼谷 / BKK" aria-label="到达城市" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="srxToDrop" onfocus="srxCityFocus(this)" onclick="srxCityFocus(this)" oninput="srxCityInput(this)" onkeydown="srxCityKey(event,this)" onchange="srxCityChanged(this)" onfocusout="srxCityBlur(this)">
+      <button type="button" class="srx-citychev" data-citytoggle="1" onclick="srxOpenCityPanel('srxTo')" aria-label="浏览全部到达城市" title="浏览全部城市"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+      <div class="srx-citydrop" id="srxToDrop" role="listbox" aria-label="到达城市建议" hidden></div>
+     </span></label>
+    <label class="srx-field srx-datefield" for="srxDate"><span class="srx-flab">日期</span><input type="date" id="srxDate" aria-label="出发日期"></label>
+    <button type="button" class="go" id="srxGo" onclick="srxProbeRun()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 12h15"/><path d="m13 6 6 6-6 6"/></svg>实时探针</button>
+    <button type="button" class="exit" id="srxExitProbe" onclick="srxExitProbe()" style="display:none">退出探针</button>
+   </div>
+   <div class="srx-crow">
+    <span class="srx-crow-lab">渠道 <small>优先级 携程 › 去哪儿 › 飞猪 › 同程 › 途牛</small></span>
+    <div class="srx-platpick" id="srxPlatPick" role="group" aria-label="探针渠道（优先级：携程、去哪儿、飞猪、同程、途牛）" title="渠道优先级：携程 > 去哪儿 > 飞猪 > 同程 > 途牛">
+     <label class="srx-pchip" data-p="ctrip" style="--pc:var(--c-ctrip)"><input type="checkbox" value="ctrip" checked><span class="dot" aria-hidden="true"></span>携程</label>
+     <label class="srx-pchip" data-p="qunar" style="--pc:var(--c-qunar)"><input type="checkbox" value="qunar" checked><span class="dot" aria-hidden="true"></span>去哪儿</label>
+     <label class="srx-pchip" data-p="fliggy" style="--pc:var(--c-fliggy)"><input type="checkbox" value="fliggy" checked><span class="dot" aria-hidden="true"></span>飞猪</label>
+     <label class="srx-pchip" data-p="tongcheng" style="--pc:var(--c-tongcheng)"><input type="checkbox" value="tongcheng" checked><span class="dot" aria-hidden="true"></span>同程</label>
+     <label class="srx-pchip" data-p="tuniu" style="--pc:var(--c-tuniu)"><input type="checkbox" value="tuniu" checked><span class="dot" aria-hidden="true"></span>途牛</label>
+    </div>
+    <span class="srx-crow-hint" id="srxPlatHint">本次提交使用勾选渠道</span>
    </div>
   </div>
   <div id="srxBatchWrap" style="display:none">
@@ -6343,9 +6401,11 @@ html[data-theme="dark"] .bic-air{box-shadow:0 0 0 1px rgba(255,255,255,.18)!impo
   <div class="srx-taskpanel" id="srxTaskPanel" hidden>
    <div class="srx-task-sum">
     <span class="srx-task-live" id="srxTaskLive"><i></i><b>采集中</b></span>
+    <span class="srx-task-stage" id="srxTaskStage">—</span>
     <span class="srx-task-cond" id="srxTaskCond">—</span>
     <span class="srx-task-nums" id="srxTaskNums">0/0</span>
     <span class="srx-task-time" id="srxTaskTime">0s</span>
+    <span class="srx-task-upd" id="srxTaskUpd"></span>
     <span class="srx-task-sp"></span>
     <button type="button" id="srxTaskFold" onclick="srxTaskFold()" aria-expanded="true">收起进度</button>
     <button type="button" class="warn" id="srxTaskCancel" onclick="srxTaskCancel()">取消</button>
@@ -6355,7 +6415,14 @@ html[data-theme="dark"] .bic-air{box-shadow:0 0 0 1px rgba(255,255,255,.18)!impo
     <div class="srx-task-legs" id="srxTaskLegs"></div>
     <details class="srx-task-ev" id="srxTaskEvBox">
      <summary>事件与证据 <span id="srxTaskEvN">0</span></summary>
-     <div class="srx-task-evbar"><label><input type="checkbox" id="srxTaskEvErr" onchange="srxTaskRender(SRX_TASK)"> 只看异常</label><span id="srxTaskEvHint">按时间倒序，最多 80 条</span></div>
+     <div class="srx-task-evbar">
+      <label><input type="checkbox" id="srxTaskEvErr" onchange="srxTaskEvFilter()"> 只看异常</label>
+      <select id="srxTaskEvPlat" onchange="srxTaskEvFilter()" aria-label="按渠道筛选事件"><option value="">全部渠道</option></select>
+      <select id="srxTaskEvStage" onchange="srxTaskEvFilter()" aria-label="按阶段筛选事件"><option value="">全部阶段</option></select>
+      <label class="follow"><input type="checkbox" id="srxTaskEvFollow" checked onchange="srxTaskFollow(this.checked)"> 跟随最新</label>
+      <button type="button" class="srx-ev-latest" id="srxTaskEvLatest" onclick="srxTaskFollow(true)" hidden>回到最新</button>
+      <span id="srxTaskEvHint">按时间倒序，最多 80 条</span>
+     </div>
      <div class="srx-task-events" id="srxTaskEvents"></div>
     </details>
    </div>
@@ -9654,7 +9721,8 @@ function channelAuthView(p){
  if(status==='login_required'&&rejectedScopes.length)labels.login_required=rejectedScopes.join('、')+'需重新登录';
  const evidence=Object.entries(s.scopes||{}).map(([scope,v])=>{
   const at=v.needs_login?v.auth_at:v.detail_at;
-  return (scopes[scope]||scope)+'：'+(v.needs_login?'明确登录拒绝':v.detail_available?'近期航班明细可用':'暂无当前验证')+(at?' · '+at:'');
+  const probe=v.probe_count?(' · 探针明细 '+v.probe_count+' 行'+(v.probe_date?(' · '+v.probe_date):'')):'';
+  return (scopes[scope]||scope)+'：'+(v.needs_login?'明确登录拒绝':v.detail_available?'近期航班明细可用':'暂无当前验证')+(at?' · '+at:'')+probe;
  }).join('；');
  const title=cs.error?'当前状态读取失败，保留此前记录；稍后自动重试':
   (s.error||evidence||(s.saved?'本地会话已保存；仍需实际请求核验，不等同于已登录或航班可售':'未检测到保存的本地会话'));
@@ -14099,6 +14167,77 @@ let SRX_RAWPEND=null,SRX_LASTFOCUS=null,SRX_SEARCH_T=null,SRX_FACET_SIG='',SRX_R
 
 function srxU(){return (S&&S.users&&S.users[U])||null}
 function srxAll(){if(SRX.probe&&Array.isArray(SRX.probe.rows))return SRX.probe.rows;const u=srxU();return (u&&u.flights)||[]}
+/* 已提交任务的请求条件属于快照：可展示、可追溯，但不能被结果筛选改掉。 */
+function srxProbeWant(){return (SRX.probe&&Array.isArray(SRX.probe.want))?SRX.probe.want:[]}
+function srxDateIsSnapshot(){return !!(!SRX.probe||!SRX.probe.batch)&&!!(SRX.probe&&SRX.date)}
+function srxDateLock(){return !!(SRX.probe&&!SRX.probe.batch&&SRX.date)}
+function srxTaskLegAt(pair,date){
+ const ps=(SRX.probe&&SRX.probe.legs)||[];
+ return ps.find(lg=>(!pair||((lg.from||'')+'|'+(lg.to||''))===pair)&&(!date||lg.date===date))||null;
+}
+function srxLegOutcome(lg){
+ if(!lg)return '';
+ const cs=Object.values(lg.channels||{});
+ const detail=cs.reduce((n,c)=>n+Number(c.detail||0),0);
+ const cal=cs.reduce((n,c)=>n+Number(c.cal||0),0);
+ const fail=cs.some(c=>['error','timeout','parse_error','blocked','login_required','challenge','session_busy','partial'].includes(c.status));
+ const run=cs.some(c=>['queued','running'].includes(c.status));
+ if(run)return 'running';
+ if(lg.status==='cancelled'||cs.some(c=>c.status==='cancelled'))return 'cancelled';
+ if(detail>0)return 'detail';
+ if(cal>0)return 'calendar';
+ if(fail)return 'failed';
+ if(cs.length&&cs.every(c=>c.status==='empty'))return 'empty';
+ return lg.status==='done'?'empty':'';
+}
+function srxCountModel(){
+ const base=srxBase();
+ const dateRows=SRX.date?base.filter(f=>f.date===SRX.date):base;
+ const ps=srxPlatSet();
+ const channelRows=dateRows.filter(f=>ps.has(f.platKey));
+ const shown=srxFiltered();
+ const real=a=>a.filter(f=>!srxIsCal(f)&&!srxIsStale(f));
+ return {base:base.length,date:dateRows.length,channel:channelRows.length,shown:shown.length,
+  hidden:Math.max(0,channelRows.length-shown.length),other:Math.max(0,base.length-dateRows.length),
+  baseReal:real(base).length,dateReal:real(dateRows).length,shownReal:real(shown).length};
+}
+function srxEmptyInfo(){
+ const c=srxCountModel(),pair=SRX.pair?srxPairName(...SRX.pair.split('|')):'当前航线';
+ if(!srxAll().length)return {kind:'none',title:'当前视角没有解析行',body:'未采不等于无票。可发起真实探针，或到渠道健康查看各入口状态。'};
+ if(!c.base)return {kind:'route',title:pair+' 暂无解析行',body:'该航线全部日期均无真实采集。未采不等于无票；先发起探针或到配置页补充出发日期。'};
+ if(SRX.date&&!c.date){
+  const lg=srxTaskLegAt(SRX.pair,SRX.date),out=srxLegOutcome(lg);
+  const words={running:'正在采集',failed:'本次采集失败',empty:'原站本次无结果',calendar:'本次仅有日历参考价',cancelled:'采集已取消',detail:'任务已有明细，当前结果筛选未包含'};
+  const reason=words[out]||'尚未采集';
+  let why='未采不代表无票；保留你的日期，不自动换日。';
+  if(out==='failed')why='请求失败不等于原站无票；可展开探针进度定位失败渠道并重试。';
+  else if(out==='empty')why='原站查询正常结束且未返回明细，属于本次真实无结果；不代表该渠道永久无能力。';
+  else if(out==='calendar')why='只取得日历参考价，未取得可售航班明细，不能按成功计数。';
+  else if(out==='running')why='任务仍在执行，结果会按渠道增量进入列表。';
+  return {kind:'date',out,title:'所选日期 '+SRX.date+'：'+reason,
+   body:'日期内 '+c.date+' 行；航线跨日期 '+c.base+' 行，其他日期 '+c.other+' 行。'+why};
+ }
+ if(!c.channel){
+  const want=srxProbeWant();
+  const req=want.length?want.map(p=>(SRX_PLATS[p]||[p])[0]).join('/'):'（未记录）';
+  const rf=SRX.plats.length?SRX.plats.map(p=>(SRX_PLATS[p]||[p])[0]).join('/'):'全部';
+  return {kind:'channel',title:'结果渠道筛选无匹配',
+   body:'所选日期有 '+c.date+' 行，但结果渠道筛选「'+rf+'」无记录；任务请求渠道为「'+req+'」。任务日期与请求渠道未被改写。'};
+ }
+ if(!c.baseReal&&c.base){
+  return {kind:'fallback',title:'仅有日历/补位参考，无真实明细',
+   body:'当前范围 '+c.base+' 行均为日历价/补位行，不能按可出手机票计数；可发起探针补真实明细。'};
+ }
+ if(c.shown&&!c.shownReal){
+  return {kind:'fallback',title:'当前结果仅有日历/补位行',
+   body:'当前展示 '+c.shown+' 行均为日历/补位参考；真实明细 '+c.baseReal+' 行在筛选外。可清除结果筛选或发起探针。'};
+ }
+ if(!c.shown){
+  return {kind:'filter',title:'筛选无结果',
+   body:'所选日期 '+c.date+' 行 · 渠道筛选后 '+c.channel+' 行 · 额外筛选隐藏 '+c.hidden+' 行。生效筛选：'+(srxFilterSummary()||'无')};
+ }
+ return null;
+}
 /* limit 是状态层上限（80=首屏默认）；窄屏渲染面再压到 24，加载更多逐页放开 */
 function srxRowCap(){return innerWidth<=1100&&SRX.limit===SRX_PAGE?SRX_MOBILE_PAGE:SRX.limit}
 function srxPairName(fr,to){
@@ -14730,13 +14869,14 @@ function renderSearch(){
  try{
   srxEnsure();
   const _sv=$('searchview');if(_sv)_sv.classList.toggle('srx-neutral',!SRX.date&&!SRX.probe);
- srxRenderRestore();srxRenderHero();srxRenderBand();srxRenderBrief();srxRenderKpis();srxRenderChips();srxRenderFacets();srxRenderQuick();srxRenderAbar();srxRenderCtx();srxRenderMobileSummary();
+ srxRenderRestore();srxRenderHero();srxRenderBand();srxRenderBrief();srxRenderCapbar();srxRenderKpis();srxRenderChips();srxRenderFacets();srxRenderQuick();srxRenderAbar();srxRenderCtx();srxRenderMobileSummary();
   srxRenderRows();
   const _sel=srxFindSel();if(_sel&&_sel.platKey&&!SRX.mchPinned)SRX.mch=_sel.platKey;
   srxRenderMirror();
   if(SRX.detailOpen)srxRenderDetail(true);
   srxPrefillProbe();
   srxWatchSync();srxWatchCount();srxWatchLoad();
+  srxRenderProbeMini();
   SRX_LASTSIG=srxSig();
  }catch(e){
   console.error('renderSearch:',e);
@@ -14763,9 +14903,17 @@ function srxRenderHero(){
   :'五渠道真实采集行 · 解析 ⇄ 镜像 ⇄ RAW 三重对齐 · 缺失一律标未供/未采，不伪造截图与同班。';
  if(mode)mode.textContent=SRX.probe?(SRX.probe.batch?'组合探针 · 未入库':'探针结果 · 未入库'):(demo?'演示数据 · 合成':'监控数据');
  const pm=$('srxProbeMode');if(pm)pm.textContent=SRX.probe?(SRX.probe.batch?'组合探针 · 未入库':'探针结果 · 未入库'):(demo?'DEMO · 合成':'监控数据');
- const all=srxBase(),real=all.filter(f=>!srxIsCal(f)&&!srxIsStale(f));
+ const c=srxCountModel(),all=srxBase(),real=all.filter(f=>!srxIsCal(f)&&!srxIsStale(f));
  const _last=real.map(f=>f.fetchedAt).filter(Boolean).sort().pop();
- if(meta)meta.textContent=(SRX.probe&&SRX.probe.batch?(((SRX.probe.legs||[]).length)+' 条航线/日期'):(SRX.pair?srxPairName(...SRX.pair.split('|')):'—'))+(SRX.date?' · '+SRX.date:' · 全部日期')+' · 本轮 '+real.length+' 行'+(_last?' · '+_last.slice(11,16):'');
+ let scope;
+ if(SRX.probe){
+  scope=(SRX.probe.batch?'组合任务':'本次任务')+' · '+(SRX.date?SRX.date+' '+c.date+' 行':'全部日期 '+c.base+' 行')+' · 任务返回 '+c.base+' 行';
+ }else if(SRX.date){
+  scope=SRX.date+' '+c.date+' 行 · 航线跨日期 '+c.base+' 行';
+ }else{
+  scope='全部日期 '+c.base+' 行 · 航线跨日期 '+c.base+' 行';
+ }
+ if(meta)meta.textContent=(SRX.probe&&SRX.probe.batch?(((SRX.probe.legs||[]).length)+' 条航线/日期'):(SRX.pair?srxPairName(...SRX.pair.split('|')):'—'))+' · '+scope+(_last?' · '+_last.slice(11,16):'');
 }
 function srxBandKey(){return (SRX.pair||'')+'|'+(SRX.date||'')}
 /* 价带窗口锚点与选中日分离：点某天只换选中行，不把窗口重置到该天。
@@ -14811,11 +14959,11 @@ function srxCalBothFetch(){
   .catch(()=>{delete SRX_CAL_PEND[key]});
 }
 function srxRenderBand(){
- const box=$('srxBandDays'),note=$('srxBandNote');
+ const box=$('srxBandDays'),note=$('srxBandNote'),sec=box&&box.closest('.srx-band');
  if(!box)return;
  if(!box.dataset.xhooked){box.dataset.xhooked='1';box.addEventListener('scroll',srxBandHint,{passive:true})}
  if(SRX.bandPair!==SRX.pair){SRX.bandAnchor='';SRX.bandPair=SRX.pair}
- if(!SRX.pair||!SRX.date){box.innerHTML='<div class="srx-band-empty"><span>近 14 天出发价带需选定出发日；只画真实落库点，未采不补价。</span></div>';if(note)note.textContent='';return}
+ if(!SRX.pair||!SRX.date){box.innerHTML='<div class="srx-band-empty"><span>近 14 天出发价带需选定出发日；只画真实落库点，未采不补价。</span></div>';if(note)note.textContent='';if(sec)sec.classList.add('compact');return}
  const anchor=SRX.bandAnchor||SRX.date;
  const key=srxCalKey();
  if(!SRX_CAL[key]&&!SRX_CAL_PEND[key]){
@@ -14855,8 +15003,10 @@ function srxRenderBand(){
   box.innerHTML='<div class="srx-band-empty"><span>近 14 天出发日均未采（'+he(srxMmdd(wAnchor))+'→'+he(srxMmdd(srxAddDays(wAnchor,13)))+'）；只画真实落库点，不用日历因子补价。</span><button type="button" data-bandexpand="1">展开日期带</button></div>';
   if(note)note.textContent='';
   if(_meta)_meta.textContent='按出发日 · '+srxMmdd(wAnchor)+'→'+srxMmdd(srxAddDays(wAnchor,13))+' · 均未采';
+  if(sec)sec.classList.add('compact');
   requestAnimationFrame(srxBandHint);return;
  }
+ if(sec)sec.classList.remove('compact');
  if(_meta)_meta.textContent='按出发日 · '+srxMmdd(wAnchor)+'→'+srxMmdd(srxAddDays(wAnchor,13))+' · 真实落库最低价';
  const days=[];for(let i=0;i<14;i++)days.push(srxAddDays(wAnchor,i));
  const prices=(j.departure||[]).map(x=>x.price),mn=prices.length?Math.min(...prices):null;
@@ -14908,7 +15058,6 @@ function srxRenderBrief(){
    +'</div>';
  }).join('');
  el.innerHTML=cards;
- srxRenderCapbar();
  if(!el.dataset.xhooked){el.dataset.xhooked='1';el.addEventListener('scroll',srxBriefHint,{passive:true})}
  requestAnimationFrame(srxBriefHint);
 }
@@ -14935,46 +15084,42 @@ function srxGoLogin(p){
    行缺失只说明该航线未供，不能推断登录失效。 */
 function srxRenderCapbar(){
  const el=$('srxCapbar');if(!el)return;
- const rows=srxBase();
- const isIntl=rows.some(f=>f.intl)||((SRX.probe&&SRX.probe.rows)||[]).some(f=>f.intl);
+ const allRows=srxBase(),rows=allRows.filter(f=>!SRX.date||f.date===SRX.date);
+ const isIntl=allRows.some(f=>f.intl)||((SRX.probe&&SRX.probe.rows)||[]).some(f=>f.intl);
  if(!isIntl){el.hidden=true;el.innerHTML='';return}
- const detail=new Set(rows.filter(f=>!srxIsCal(f)&&!srxIsStale(f)).map(f=>f.platKey));
- const fallback=new Set(rows.filter(f=>srxIsStale(f)&&!srxIsCal(f)).map(f=>f.platKey));
- const chip=(p,kind,label)=>'<span class="capchip '+kind+'"><span class="p">'+srxPlatIcon(p)+'</span>'+he(SRX_PLATS[p][0])+' · '+he(label)+'</span>';
- let html='<span class="caplead">本次渠道状态</span>';
- const req=(p)=>{
-  if(!SRX.probe)return true;
-  return (SRX.probe.legs||[]).some(lg=>lg.channels&&lg.channels[p]);
- };
- const none=(p)=>{
-  if(!req(p))return chip(p,'cal','未请求');
-  if(SRX.probe){
-   const cs=(SRX.probe.legs||[]).map(lg=>(lg.channels||{})[p]).filter(Boolean);
-   const paths=[];cs.forEach(c=>(c.paths||[]).forEach(x=>paths.push(x)));
-   const last=paths[paths.length-1];
-   if(last){
-    const where='链路 '+(last.path||'');
-    if(last.status==='login')return chip(p,'auth',where+' 需登录');
-    if(last.status==='blocked')return chip(p,'auth',where+' 人机验证');
-    if(last.status==='timeout')return chip(p,'auth',where+' 超时');
-    if(last.status==='error')return chip(p,'auth',where+' 失败');
-   }
-   if(cs.some(c=>['error','timeout'].includes(c.status)))return chip(p,'auth','本次失败');
-   if(cs.some(c=>c.status==='cancelled'))return chip(p,'auth','已取消');
-   return chip(p,'cal','本次无结果');
-  }
-  return chip(p,'cal','本次未供');
- };
+ const cAll=srxCountModel(),dateUncollected=!!SRX.date&&!cAll.date;
+ const chip=(p,kind,label,title)=>'<span class="capchip '+kind+'" title="'+he(title||'')+'"><span class="p">'+srxPlatIcon(p)+'</span>'+he(SRX_PLATS[p][0])+' · '+he(label)+'</span>';
+ const want=srxProbeWant();
+ const legs=(SRX.probe&&SRX.probe.legs)||[];
+ let html='<span class="caplead">本次渠道产物'+(SRX.date?(' · '+SRX.date):'')+'</span>';
  SRX_PLAT_ORDER.forEach(p=>{
-  if(detail.has(p))html+=chip(p,'detail','航班明细');
-  else if(fallback.has(p))html+=chip(p,'cal','补位明细');
-  else if(rows.some(f=>f.platKey===p&&srxIsCal(f)&&!srxIsStale(f)))html+=chip(p,'cal','仅日历参考');
-  else html+=none(p);
+  const rs=rows.filter(f=>f.platKey===p);
+  const detail=rs.filter(f=>!srxIsCal(f)&&!srxIsStale(f)).length;
+  const cal=rs.filter(f=>srxIsCal(f)&&!srxIsStale(f)).length;
+  const stale=rs.filter(f=>srxIsStale(f)&&!srxIsCal(f)).length;
+  const cs=legs.map(lg=>(lg.channels||{})[p]).filter(Boolean);
+  const requested=!SRX.probe||want.includes(p)||cs.length||rs.length;
+  const paths=[];cs.forEach(c=>(c.paths||[]).forEach(x=>paths.push(x)));
+  const last=paths[paths.length-1]||null;
+  const evidence=last?('最近入口：'+(last.path||'')+' '+srxPathCN(last.status)+(last.detail?(' · '+last.detail):'')):'';
+  let kind='cal',label='';
+  if(detail){label='明细 '+detail+' 行';kind='detail'}
+  else if(cal){label='仅日历 '+cal+' 行'}
+  else if(stale){label='补位 '+stale+' 行'}
+  else if(!requested){label='本次未请求'}
+  else if(cs.some(c=>['running','queued'].includes(c.status))){label='采集中'+(cs.find(c=>c.status==='running'&&c.phase)?(' · '+cs.find(c=>c.status==='running').phase):'')}
+  else if(!SRX.probe&&dateUncollected){label='所选日期未采'}
+  else if(cs.some(c=>['challenge','blocked'].includes(c.status))){label='本次人机验证';kind='auth'}
+  else if(cs.some(c=>c.status==='login_required')){label='本次需登录';kind='auth'}
+  else if(cs.some(c=>['error','timeout','parse_error','session_busy','partial'].includes(c.status))){label='本次失败';kind='auth'}
+  else if(cs.some(c=>c.status==='cancelled')){label='已取消'}
+  else{label='本次无明细'}
+  html+=chip(p,kind,label,'产物：'+label+(evidence?'；'+evidence:'')+'；会话状态另列，不由无明细或空结果反推');
  });
  const sess=SRX_PLAT_ORDER.map(p=>{
   const v=channelAuthView(p);
   if(!['active','saving','pending','available','saved','save_error','login_required'].includes(v.status))return '';
-  return chip(p,v.needsLogin?'auth':'cal','会话 '+v.label);
+  return chip(p,v.needsLogin?'auth':'cal','会话 '+v.label,v.title);
  }).join('');
  if(sess)html+='<span class="capdiv"></span><span class="caplead">会话</span>'+sess;
  const need=SRX_PLAT_ORDER.filter(p=>channelAuthView(p).needsLogin);
@@ -14985,12 +15130,19 @@ function srxRenderCapbar(){
 }
 function srxRenderKpis(){
  const el=$('srxKpis');if(!el)return;
- const rows=srxFiltered(),all=srxBase();
+ const rows=srxFiltered(),all=srxBase(),c=srxCountModel();
  const real=rows.filter(f=>!srxIsCal(f)&&!srxIsStale(f));
  const qual=real.filter(f=>f.qual).length;
- if(!real.length){const cal0=rows.filter(f=>srxIsCal(f)).length;
+ if(!real.length){
+  const info=srxEmptyInfo()||{kind:'none',title:'没有可展示的明细',body:''};
+  const acts=[];
+  if(info.kind==='date'&&info.out!=='running'&&SRX.date)acts.push('<button type="button" data-probedate="'+he(SRX.date)+'">用探针查询该日期</button>');
+  if(info.kind==='date'&&c.other)acts.push('<button type="button" data-alldates="1">查看其他日期（'+c.other+' 行）</button>');
+  if(info.kind==='channel'||info.kind==='filter')acts.push('<button type="button" onclick="srxClearFilters()">清除结果筛选</button>');
+  if(info.kind==='fallback'&&!SRX.probe)acts.push('<button type="button" onclick="srxFocusProbe()">发起探针补明细</button>');
+  if(SRX.probe)acts.push('<button type="button" onclick="srxTaskOpen()">查看探针进度</button>');
   el.classList.add('srx-audit-empty');
-  el.innerHTML='<div class="srx-kpi-empty"><b>本轮无航班明细</b><span>'+cal0+' 条日历参考价不计明细；未采/无票/失败分开统计，不伪造成功。</span><span class="acts"><button type="button" data-alldates="1">查看全部日期</button><button type="button" onclick="srxTaskOpen()">查看探针进度</button></span></div>';
+  el.innerHTML='<div class="srx-kpi-empty"><b>'+he(info.title)+'</b><span>'+he(info.body)+'</span>'+(acts.length?'<span class="acts">'+acts.join('')+'</span>':'')+'</div>';
   return}
  el.classList.remove('srx-audit-empty');
  /* 达标按「航班」而非「报价行」说话：14 行常是 6 个航班跨 3 渠道；
@@ -15008,12 +15160,14 @@ function srxRenderKpis(){
  const fallback=rows.filter(f=>srxIsStale(f)).length;
  const bad=rows.filter(f=>!srxIsStale(f)&&(f.xphan||f.outlier)).length;
  const k=(lab,val,sub,cls,act,bar)=>'<button type="button" class="srx-kpi '+(cls||'')+'" data-kpi="'+lab+'" data-kact="'+(act||'')+'" aria-label="'+he(lab+' '+val+' '+sub)+'"><span class="k">'+he(lab)+'</span><span class="v">'+val+'</span><span class="s">'+he(sub)+'</span>'+(bar==null?'':'<span class="bar"><i style="width:'+Math.max(2,Math.min(100,bar))+'%"></i></span>')+'</button>';
+ const extra=['日历价 '+cal+' 行'+(cal?'（不计明细）':''),'补位 '+fallback+' 行'];
+ if(bad)extra.push('异常 '+bad+' 行');else extra.push('无数据风险标记');
+ const scope=SRX.date?('所选日期 '+c.date+' / 跨日期 '+c.base):('跨日期 '+c.base);
  el.innerHTML=(SRX.probe?k('可出手机票','—','探针未评估（无配置心理线）','warn','qual',0):k('可出手机票',qual,qualUniq+' 个航班 · '+qual+' 条报价 · 真达标','ok','qual',real.length?qual/real.length*100:0))
-  +k('本轮解析行',real.length,'去日历/补位','' ,'real',0)
-  +k('日历价',cal,'非具体航班 · 不参与达标','warn','cal',0)
+  +k('本次明细',real.length,scope+' · 去日历/补位','' ,'real',0)
   +k('同班覆盖',multi,'真实同班 ≥2 渠道','info','agg',g.groups.length?multi/g.groups.length*100:0)
   +k('渠道覆盖',dataPlats+'/5','航班级 '+realPlats+' · 日历 '+calPlats,'', 'links',dataPlats/5*100)
-  +k('补位行',fallback,'上轮有效 · 含日历'+(bad?' · 异常 '+bad:''),bad?'bad':'warn','risk',rows.length?fallback/rows.length*100:0);
+  +'<div class="srx-kpi-sub">'+extra.map(he).join(' · ')+'</div>';
 }
 function srxRenderChips(){
  const pairs=$('srxPairs');if(pairs){
@@ -15025,8 +15179,12 @@ function srxRenderChips(){
   const ds={};srxBase().forEach(f=>{if(f.date)ds[f.date]=(ds[f.date]||0)+1});
   if(SRX.date&&!ds[SRX.date])ds[SRX.date]=0;
   const keys=Object.keys(ds).sort();
-  dates.innerHTML='<button type="button" class="srx-chip'+(SRX.date?'':' on')+'" data-date="" aria-pressed="'+(!SRX.date)+'">全部日期<span class="n">'+srxBase().length+'</span></button>'
-   +keys.map(d=>'<button type="button" class="srx-chip'+(SRX.date===d?' on':'')+(ds[d]?'':' off')+'" data-date="'+he(d)+'" aria-pressed="'+(SRX.date===d)+'">'+he(d.slice(5))+'<span class="n">'+(ds[d]||'未采')+'</span></button>').join('');
+  if(srxDateLock()){
+   dates.innerHTML='<span class="srx-chip snap" title="已提交任务的日期快照，不可作为结果筛选移除；改变日期需发起新查询">任务日期 '+he(SRX.date)+'<span class="n">'+(ds[SRX.date]||0)+'</span></span><span class="srx-chip-note">已锁定任务快照</span>';
+  }else{
+   dates.innerHTML='<button type="button" class="srx-chip'+(SRX.date?'':' on')+'" data-date="" aria-pressed="'+(!SRX.date)+'">全部日期<span class="n">'+srxBase().length+'</span></button>'
+    +keys.map(d=>'<button type="button" class="srx-chip'+(SRX.date===d?' on':'')+(ds[d]?'':' off')+'" data-date="'+he(d)+'" aria-pressed="'+(SRX.date===d)+'">'+he(d.slice(5))+'<span class="n">'+(ds[d]||'未采')+'</span></button>').join('');
+  }
  }
  const plats=$('srxPlats');if(plats){
   const base=srxBase();const cnt={};base.forEach(f=>{if(f.platKey)cnt[f.platKey]=(cnt[f.platKey]||0)+1});
@@ -15102,8 +15260,9 @@ function srxRenderQuick(){
 function srxRenderAbar(){
  const el=$('srxAbar');if(!el)return;
  const F=SRX.f,items=[];
- if(SRX.date)items.push(['date',SRX.date,'日期 '+SRX.date]);
- if(SRX.plats.length)items.push(['plats',SRX.plats.join('+'),'渠道 '+SRX.plats.map(p=>SRX_PLATS[p][0]).join('+')]);
+ const snap=srxDateIsSnapshot();
+ if(SRX.date&&!snap)items.push(['date',SRX.date,'日期 '+SRX.date]);
+ if(SRX.plats.length)items.push(['plats',SRX.plats.join('+'),'结果渠道 '+SRX.plats.map(p=>SRX_PLATS[p][0]).join('+')]);
  if(SRX.q)items.push(['q',SRX.q,'搜索 “'+SRX.q+'”']);
  if(F.trip)items.push(['trip',F.trip,F.trip==='direct'?'直飞':'中转']);
  if(F.cabin)items.push(['cabin',F.cabin,F.cabin==='eco'?'经济':'公务/头等']);
@@ -15114,8 +15273,16 @@ function srxRenderAbar(){
  if(F.pmax!=='')items.push(['pmax',F.pmax,'≤¥'+F.pmax]);
  [['bag','含行李'],['meal','含餐食'],['noLcc','排除廉航'],['share','仅共享'],['cross','仅跨天'],['stop','仅经停'],['hasView','有原页'],['hasRaw','有 raw'],['hideCal','隐藏日历价'],['missing','仅缺失'],['complete','字段齐全'],['risk','仅风险']].forEach(([k,l])=>{if(F[k])items.push([k,'1',l])});
  if(SRX.agg)items.push(['agg','1','同航班聚合']);
- el.innerHTML=items.map(x=>'<button type="button" class="srx-chip" data-abar="'+x[0]+'" data-abarv="'+he(x[1])+'">'+he(x[2])+'<span class="x">✕</span></button>').join('')
-  +(items.length?'<button type="button" class="srx-chip" data-abar="__all" data-abarv="1">清除全部</button>':'');
+ let head='';
+ if(SRX.probe){
+  const want=srxProbeWant();
+  const ps=want.length?want.map(p=>(SRX_PLATS[p]||[p])[0]).join(' / '):'未记录';
+  const plans=(SRX.probe.legs||[]).map(lg=>lg.date).filter(Boolean);
+  const ds=[...new Set(plans)].join(' / ');
+  head='<span class="srx-snap"><b>任务快照</b><span>'+(ds?ds+' · ':'')+'请求渠道 '+he(ps)+'</span><button type="button" onclick="srxFocusProbe()">发起新查询</button></span>';
+ }
+ const chips=items.map(x=>'<button type="button" class="srx-chip" data-abar="'+x[0]+'" data-abarv="'+he(x[1])+'">'+he(x[2])+'<span class="x">✕</span></button>').join('');
+ el.innerHTML=head+'<span class="srx-resf"><b>结果筛选</b>'+(chips||'<span class="none">无（展示当前范围全部行）</span>')+(chips?'<button type="button" class="srx-chip" data-abar="__all" data-abarv="1">清除结果筛选</button>':'')+'</span>';
 }
 function srxTicks(f){
  const specs=SRX_FIELD_SPECS.slice(0,13);let ok=0;
@@ -15176,8 +15343,16 @@ function srxRowsHTML(rows,all){
  if(!S)return '<div class="srx-skel"></div><div class="srx-skel"></div><div class="srx-skel"></div>';
  if(!srxU()&&!SRX.probe)return '<div class="srx-empty"><b>还没有可检索的用户</b>先到配置页添加航线与用户，采集一轮后这里会出现真实解析行。</div>';
  if(!all.length)return '<div class="srx-empty"><b>当前航线暂无解析行</b>该航线全部日期均无真实采集；可在上方探针查询，或到「监控 · 渠道健康」查看渠道状态。未采不等于无票。</div>';
- if(SRX.date&&!all.some(f=>(f.date||'')===SRX.date))return '<div class="srx-empty"><b>所选日期 '+he(SRX.date)+' 暂无真实采集</b>该航线其他日期有 '+all.length+' 行。这里保留你的日期选择，不会自动换日。<div class="acts"><button type="button" data-alldates="1">查看全部日期</button><button type="button" data-probedate="'+he(SRX.date)+'">用探针查询该日期</button></div></div>';
- if(!rows.length){const ef=srxFilterSummary();return '<div class="srx-empty"><b>筛选无结果</b>当前范围 '+all.length+' 行，生效条件：'+(ef?he(ef):'无')+'。<div class="acts"><button type="button" data-clearfilters="1">清除结果筛选</button><button type="button" data-alldates="1">查看全部日期</button></div></div>'}
+ if(!rows.length){
+  const info=srxEmptyInfo(),c=srxCountModel(),acts=[];
+  if(info&&info.kind==='date'&&info.out!=='running')acts.push('<button type="button" data-probedate="'+he(SRX.date)+'">用探针查询该日期</button>');
+  if(info&&info.kind==='date'&&c.other&&!srxDateLock())acts.push('<button type="button" data-alldates="1">查看其他日期（'+c.other+' 行）</button>');
+  if(info&&info.kind==='channel')acts.push('<button type="button" onclick="srxTogglePlat(\'\')">清除结果渠道筛选</button>');
+  if(info&&info.kind==='filter')acts.push('<button type="button" onclick="srxClearFilters()">清除结果筛选</button>');
+  if(SRX.probe)acts.push('<button type="button" onclick="srxTaskOpen()">查看探针进度</button>');
+  if(!acts.length)acts.push('<button type="button" onclick="srxFocusProbe()">发起真实探针</button>');
+  return '<div class="srx-empty"><b>'+he(info?info.title:'没有可展示的行')+'</b>'+he(info?info.body:'')+'<div class="acts">'+acts.join('')+'</div></div>';
+ }
  const shown=srxShownRows(rows);
  if(SRX.agg){
   const g=srxGroup(shown);let out='';
@@ -15794,6 +15969,11 @@ function srxPrefillProbe(){
   if(!SRX_TASK)srxTaskResume();
  }
  srxBatchRender();
+ try{
+  ['srxFrom','srxTo','srxDate'].forEach(id=>{const e=$(id);if(e&&!e.dataset.miniHooked){e.dataset.miniHooked='1';['input','change'].forEach(ev=>e.addEventListener(ev,srxRenderProbeMini))}});
+  const pp=$('srxPlatPick');if(pp&&!pp.dataset.miniHooked){pp.dataset.miniHooked='1';pp.addEventListener('change',srxRenderProbeMini)}
+ }catch(e){}
+ srxRenderProbeMini();
  if(S&&S.demo&&!SRX.probe){const ps=$('srxProbeStatus');if(ps){ps.className='srx-probestatus warn';ps.textContent='演示站为静态数据，不发起真实外网探针；下载源码或 zip 后可真跑。'}}
 }
  function srxBatchToggle(){
@@ -15852,13 +16032,15 @@ async function srxProbeRun(){
  try{await srxTaskStart({from:fv,to:tv,date:dv,plats},{batch:false,names:{[fv]:fn,[tv]:tn,[fv+'|'+tv]:fn+'→'+tn}})}
  finally{if(btn){btn.disabled=false;btn.classList.remove('busy');btn.textContent='实时探针'}}
 }
-let SRX_TASK=null,SRX_TASK_TIMER=0,SRX_TASK_BASE=[],SRX_TASK_ROWS=[],SRX_TASK_ROWS_SEEN=0,SRX_TASK_SIG='';
+let SRX_TASK=null,SRX_TASK_TIMER=0,SRX_TASK_BASE=[],SRX_TASK_ROWS=[],SRX_TASK_ROWS_SEEN=0,SRX_TASK_SIG='',SRX_TASK_FOLLOW=true;
 function srxTaskStore(id){try{if(id)localStorage.setItem('jpsrx_task',String(id));else localStorage.removeItem('jpsrx_task')}catch(e){}}
 function srxTaskCond(j){
  const ps=(j&&j.plans)||[];
  if(!ps.length)return '—';
- if(ps.length===1){const p=ps[0];return p.from_name+'→'+p.to_name+' · '+p.date}
- return ps.length+' 条航线/日期 · '+ps.map(p=>p.from_name+'→'+p.to_name+' '+p.date).slice(0,3).join(' / ')+(ps.length>3?' …':'');
+ const want=(j&&j.want)||[];
+ const ch=want.length?(' · 渠道 '+want.map(p=>(SRX_PLATS[p]||[p])[0]).join('/')):'';
+ if(ps.length===1){const p=ps[0];return p.from_name+'→'+p.to_name+' · '+p.date+ch}
+ return ps.length+' 条航线/日期 · '+ps.map(p=>p.from_name+'→'+p.to_name+' '+p.date).slice(0,3).join(' / ')+(ps.length>3?' …':'')+ch;
 }
 function srxTaskMergeRows(newRows){
  const seen=new Set(),out=[];
@@ -15883,9 +16065,10 @@ function srxTaskProbe(j,rows){
  const p0=ps[0]||{};
  return {ok:true,batch:ps.length>1,legs,rows,channels,elapsed_ms:j.elapsed_ms,
   truncated:j.truncated,probe_at:new Date().toISOString(),saved:false,
+  want:j.want||[],plans:ps,
   from:p0.from,from_name:p0.from_name,to:p0.to,to_name:p0.to_name,date:p0.date};
 }
-function srxPathCN(st){return st==='ok'?'明细':(st==='calendar'?'仅日历':(st==='login'?'需登录':(st==='blocked'?'人机验证':(st==='timeout'?'超时':(st==='error'?'失败':'无结果')))))}
+function srxPathCN(st){return st==='ok'?'明细':(st==='calendar'?'仅日历':(st==='login'?'登录拒绝':(st==='blocked'?'人机验证':(st==='timeout'?'超时':(st==='error'?'失败':'无结果')))))}
 function srxTaskPaths(lg){
  const segs=[];
  SRX_PLAT_ORDER.forEach(p=>{
@@ -15898,6 +16081,24 @@ function srxTaskPaths(lg){
  });
  return segs.length?('<div class="srx-tpaths">'+segs.join('')+'</div>'):'';
 }
+function srxChannelText(c){
+ const s=(c&&c.status)||'queued';
+ if(s==='running')return c.phase||'请求中';
+ if(s==='queued')return '排队';
+ if(s==='ok')return c.detail>0?('明细 '+c.detail):(c.cal>0?('仅日历 '+c.cal):'完成');
+ if(s==='empty')return '本次无结果';
+ if(s==='calendar_only')return '仅日历 '+(c.cal||0);
+ if(s==='timeout')return '超时';
+ if(s==='cancelled')return '已取消';
+ if(s==='login_required')return '需登录';
+ if(s==='challenge')return '人机验证';
+ if(s==='blocked')return '访问受阻';
+ if(s==='parse_error')return '解析失败';
+ if(s==='partial')return '部分可用';
+ if(s==='session_busy')return '会话占用';
+ if(s==='unsupported')return '本端不供';
+ return '失败';
+}
 function srxTaskRender(j){
  if(!j){return}
  const panel=$('srxTaskPanel');if(panel)panel.hidden=false;
@@ -15908,10 +16109,20 @@ function srxTaskRender(j){
  if(live){live.className='srx-task-live '+cls;live.querySelector('b').textContent=
   st==='running'?'采集中':(st==='stopping'?'正在停止':(st==='done'?'已结束':(st==='cancelled'?'已取消':'失败')))}
  if(cond)cond.textContent=srxTaskCond(j);
- if(nums)nums.textContent='子任务 '+(j.done||0)+'/'+(j.total||0)+' · 记录 '+(j.raw||0)+' → 明细 '+(j.detail||0)+' · 日历 '+(j.cal||0)+((j.failed||0)?' · 失败 '+j.failed:'')+' · 结果 '+(j.rows_total||0);
+ if(nums)nums.textContent='子任务 '+(j.done||0)+'/'+(j.total||0)+' · 原始响应 '+(j.raw||0)+' 组 → 明细 '+(j.detail||0)+' · 日历 '+(j.cal||0)+((j.failed||0)?' · 失败 '+j.failed:'')+' · 结果 '+(j.rows_total||0);
  if(tm)tm.textContent=((j.elapsed_ms||0)/1000).toFixed((j.elapsed_ms||0)<10000?1:0)+'s';
+ const _cs=[];(j.legs||[]).forEach(lg=>Object.values(lg.channels||{}).forEach(c=>_cs.push(c||{})));
+ const nq=_cs.filter(c=>c.status==='queued').length,nr=_cs.filter(c=>c.status==='running').length;
+ const ng=_cs.filter(c=>c.status==='ok').length,ne=_cs.filter(c=>c.status==='empty').length;
+ const nc=_cs.filter(c=>c.status==='calendar_only').length,nf=_cs.filter(c=>['error','timeout','parse_error','blocked','login_required','challenge','session_busy','partial'].includes(c.status)).length;
+ const nk=_cs.filter(c=>c.status==='cancelled').length;
+ const stage=$('srxTaskStage');
+ if(stage){const parts=[];if(nq)parts.push('排队 '+nq);if(nr)parts.push('请求/解析 '+nr);if(ng)parts.push('成功 '+ng);if(ne)parts.push('无结果 '+ne);if(nc)parts.push('仅日历 '+nc);if(nf)parts.push('失败 '+nf);if(nk)parts.push('取消 '+nk);stage.textContent=parts.join(' · ')||'等待首个渠道事件'}
+ const upd=$('srxTaskUpd');
+ if(upd)upd.textContent=j.updated?('更新 '+new Date(j.updated*1000).toLocaleTimeString('zh-CN',{hour12:false})):'';
  const tg=$('srxTaskBtn');const tgn=$('srxTaskBtnN');
- if(tg){tg.style.display='inline-flex';if(tgn)tgn.textContent=(j.done||0)+'/'+(j.total||0)}
+ if(tg){tg.style.display='inline-flex';if(tgn)tgn.textContent=(j.done||0)+'/'+(j.total||0);tg.title='子任务 '+(j.done||0)+'/'+(j.total||0)+' · 明细 '+(j.detail||0)+' · 记录 '+(j.raw||0)+' · 失败 '+nf}
+ srxRenderProbeMini(j);
  const cancel=$('srxTaskCancel');if(cancel){cancel.style.display=(st==='running'||st==='stopping')?'':'none';cancel.disabled=st==='stopping';cancel.textContent=st==='stopping'?'停止中…':'取消'}
  const retry=$('srxTaskRetry');if(retry)retry.style.display=(['done','cancelled','error'].includes(st)&&j.failed)?'':'none';
  const legs=$('srxTaskLegs');
@@ -15922,23 +16133,50 @@ function srxTaskRender(j){
    const word=lg.status==='ok'?(lg.rows||0)+' 行':(lg.status==='empty'?'无结果':(lg.status==='queued'?'排队':(lg.status==='running'?'采集中':(lg.status==='cancelled'?'已取消':'失败'))));
    const chs=SRX_PLAT_ORDER.filter(p=>(lg.channels||{})[p]).map(p=>{
     const c=lg.channels[p],cs=c.status||'queued';
-    const k=cs==='running'?'run':(cs==='ok'?'ok':(['error','timeout'].includes(cs)?'bad':(cs==='empty'?'warn':'queued')));
-    const txt=cs==='running'?(c.phase||'请求中'):(cs==='ok'?(c.detail>0?('明细 '+c.detail):(c.cal>0?('仅日历 '+c.cal):'无结果')):(cs==='empty'?'无结果':(cs==='timeout'?'超时':(cs==='cancelled'?'已取消':'失败'))));
+    const k=cs==='running'?'run':(cs==='ok'?'ok':(cs==='queued'?'queued':(['error','timeout','parse_error','blocked','login_required','challenge','session_busy'].includes(cs)?'bad':(cs==='empty'||cs==='calendar_only'||cs==='partial'||cs==='cancelled'?'warn':'queued'))));
+    const txt=srxChannelText(c);
     return '<span class="srx-tch '+k+'" title="'+he((c.raw_n!=null?('渠道记录 '+c.raw_n+' · '):'')+(c.err||c.phase||''))+'"><span class="p">'+srxPlatIcon(p)+'</span>'+he((SRX_PLATS[p]||[p])[0])+' · '+he(txt)+'</span>'}).join('');
    return '<div class="srx-tleg"><b>'+he(lg.from_name)+'→'+he(lg.to_name)+'</b><em>'+he(lg.date)+'</em><span class="st '+stc+'">'+he(word)+'</span>'+(lg.elapsed_ms?'<span>'+Math.round(lg.elapsed_ms/1000)+'s</span>':'')+chs+srxTaskPaths(lg)+'</div>';
   }).join('');
  }
- const evN=$('srxTaskEvN');if(evN)evN.textContent=(j.events||[]).length;
+ const rawEvents=j.events||[];
+ const evN=$('srxTaskEvN');if(evN)evN.textContent=rawEvents.length;
  const evBox=$('srxTaskEvents');
  if(evBox){
+  const platSel=$('srxTaskEvPlat'),stageSel=$('srxTaskEvStage');
+  const plats=[...new Set(rawEvents.map(e=>e.plat).filter(Boolean))];
+  if(platSel&&platSel.dataset.opts!==plats.join(',')){
+   const cur=platSel.value;platSel.dataset.opts=plats.join(',');
+   platSel.innerHTML='<option value="">全部渠道</option>'+plats.map(p=>'<option value="'+he(p)+'">'+he((SRX_PLATS[p]||[p])[0])+'</option>').join('');
+   platSel.value=plats.includes(cur)?cur:'';
+  }
+  const phases=[...new Set(rawEvents.map(e=>e.phase).filter(Boolean))].slice(-24);
+  if(stageSel&&stageSel.dataset.opts!==phases.join('|')){
+   const cur=stageSel.value;stageSel.dataset.opts=phases.join('|');
+   stageSel.innerHTML='<option value="">全部阶段</option>'+phases.map(p=>'<option value="'+he(p)+'">'+he(p)+'</option>').join('');
+   stageSel.value=phases.includes(cur)?cur:'';
+  }
   const onlyErr=$('srxTaskEvErr')&&$('srxTaskEvErr').checked;
-  const evs=(j.events||[]).slice(-80).reverse().filter(e=>!onlyErr||['error','timeout','stopping','cancelled'].includes(e.status)||/失败|异常|超时|取消/.test(e.phase||''));
+  const platF=platSel?platSel.value:'',stageF=stageSel?stageSel.value:'';
+  const signature=JSON.stringify([rawEvents,!!onlyErr,platF,stageF]);
+  if(evBox.dataset.signature===signature)return;
+  if(!SRX_TASK_FOLLOW&&evBox.dataset.signature){const b=$('srxTaskEvLatest');if(b)b.hidden=false;return}
+  evBox.dataset.signature=signature;
+  const evs=rawEvents.slice(-160).reverse().filter(e=>!onlyErr||['error','timeout','stopping','cancelled','challenge','login_required','blocked','parse_error'].includes(e.status)||/失败|异常|超时|取消|验证/.test(e.phase||'')).filter(e=>!platF||e.plat===platF).filter(e=>!stageF||e.phase===stageF).slice(0,80);
   evBox.innerHTML=evs.map(e=>{
    const bad=['error','timeout'].includes(e.status),warn=['stopping','cancelled'].includes(e.status);
    const ps=e.plat?((SRX_PLATS[e.plat]||[e.plat])[0]):'';
-   return '<div class="ev '+(bad?'bad':(warn?'warn':''))+'"><span class="t">'+he(e.t||'')+'</span><span class="who">'+(e.leg!=null?('#'+(e.leg+1)):'')+' '+he(ps)+'</span><span class="ph">'+he(e.phase||'')+'</span><span class="m">'+he(e.msg||'')+'</span></div>';
-  }).join('')||'<div class="ev"><span class="m">暂无事件</span></div>';
+   return '<div class="ev '+(bad?'bad':(warn?'warn':''))+'"><span class="t">'+he(e.t||'')+'</span><span class="who">'+(e.leg!=null?('#'+(e.leg+1)):'')+' '+he(ps)+'</span><span class="ph">'+he(e.phase||'')+'</span><span class="m">'+he(e.msg||'')+(e.detail_count?' · 明细 '+Number(e.detail_count):'')+'</span></div>';
+  }).join('')||'<div class="ev"><span class="m">当前筛选下暂无事件</span></div>';
+  if(SRX_TASK_FOLLOW)evBox.scrollTop=0;
  }
+}
+function srxTaskEvFilter(){SRX_TASK_FOLLOW=true;const cb=$('srxTaskEvFollow');if(cb)cb.checked=true;const b=$('srxTaskEvLatest');if(b)b.hidden=true;srxTaskRender(SRX_TASK)}
+function srxTaskFollow(on){
+ SRX_TASK_FOLLOW=!!on;
+ const cb=$('srxTaskEvFollow');if(cb)cb.checked=SRX_TASK_FOLLOW;
+ const b=$('srxTaskEvLatest');if(b)b.hidden=SRX_TASK_FOLLOW;
+ if(on){srxTaskRender(SRX_TASK);const ev=$('srxTaskEvents');if(ev)ev.scrollTop=0}
 }
 function srxTaskStop(){
  if(SRX_TASK_TIMER){clearInterval(SRX_TASK_TIMER);SRX_TASK_TIMER=0}
@@ -15952,15 +16190,20 @@ function srxTaskApply(j){
  SRX.probe=srxTaskProbe(j,rows);
  SRX.probeNames={};
  (j.plans||[]).forEach(p=>{SRX.probeNames[p.from+'|'+p.to]=p.from_name+'→'+p.to_name});
- if(SRX.probe.batch){SRX.pair='';SRX.date=''}
- else if(j.plans&&j.plans[0]){SRX.pair=j.plans[0].from+'|'+j.plans[0].to;SRX.date=j.plans[0].date;SRX.bandAnchor=''}
+ if(!prev){
+  if(SRX.probe.batch){SRX.pair='';SRX.date=''}
+  else if(j.plans&&j.plans[0]){SRX.pair=j.plans[0].from+'|'+j.plans[0].to;SRX.date=j.plans[0].date;SRX.bandAnchor=''}
+ }
  const v=$('searchview');if(v)v.classList.add('srx-probe-on');
  const ex=$('srxExitProbe');if(ex)ex.style.display='';
  const pm=$('srxProbeMode');if(pm)pm.textContent=(j.plans&&j.plans.length>1?'组合探针 · 未入库':'探针结果 · 未入库');
  srxTaskRender(j);
  const changed=!prev||prev.updated!==j.updated||fresh.length;
  if(changed){if(S)renderSearch();else SRX._taskNeedRender=1}
- if(['done','cancelled','error'].includes(j.status)){srxTaskStop();try{srxTaskStore(j.id)}catch(e){}}
+ if(['done','cancelled','error'].includes(j.status)){
+  SRX_TASK_FOLLOW=true;const cb=$('srxTaskEvFollow');if(cb)cb.checked=true;const lb=$('srxTaskEvLatest');if(lb)lb.hidden=true;
+  srxTaskStop();try{srxTaskStore(j.id)}catch(e){}
+ }
 }
 async function srxTaskFetch(){
  if(!SRX_TASK)return;
@@ -15975,7 +16218,8 @@ async function srxTaskStart(payload,opts){
  const o=opts||{};
  const box=$('srxProbeStatus');
  try{
-  const r=await fetch('/api/probe/start',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+  const _p=Object.assign({},payload);if(o.retry)_p.retry=true;
+  const r=await fetch('/api/probe/start',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(_p)});
   const j=await r.json();
   if(!j.ok)throw new Error(j.err||('HTTP '+r.status));
   srxTaskStore(j.task.id);
@@ -16001,7 +16245,11 @@ function srxTaskResume(){
   if(j.status==='running'||j.status==='stopping')srxTaskStartPoll();
  }).catch(()=>{});
 }
-function srxTaskOpen(){const p=$('srxTaskPanel');if(p){p.hidden=false;try{p.scrollIntoView({block:'nearest'})}catch(e){}}if(SRX_TASK&&(SRX_TASK.status==='running'||SRX_TASK.status==='stopping')&&!SRX_TASK_TIMER)srxTaskStartPoll()}
+function srxTaskOpen(){
+ const probe=$('srxProbe');if(probe&&!probe.classList.contains('open'))srxToggleProbe();
+ const p=$('srxTaskPanel');if(p){p.hidden=false;try{p.scrollIntoView({block:'nearest'})}catch(e){}}
+ if(SRX_TASK&&(SRX_TASK.status==='running'||SRX_TASK.status==='stopping')&&!SRX_TASK_TIMER)srxTaskStartPoll();
+}
 function srxTaskFold(){const b=$('srxTaskBody'),btn=$('srxTaskFold');if(!b)return;const hide=!b.hidden;b.hidden=hide;if(btn){btn.textContent=hide?'展开进度':'收起进度';btn.setAttribute('aria-expanded',hide?'false':'true')}}
 async function srxTaskCancel(){
  if(!SRX_TASK)return;
@@ -16012,13 +16260,13 @@ async function srxTaskRetry(){
  const byLeg={},plats=new Set(),plans=[];
  (j.plans||[]).forEach(p=>plans.push(p));
  (j.legs||[]).forEach(lg=>{
-  const bad=Object.entries(lg.channels||{}).filter(([p,c])=>['error','timeout','cancelled'].includes(c.status)).map(([p])=>p);
+  const bad=Object.entries(lg.channels||{}).filter(([p,c])=>['error','timeout','cancelled','partial','challenge','login_required','blocked','parse_error','session_busy'].includes(c.status)).map(([p])=>p);
   if(bad.length){byLeg[lg.leg]=bad;bad.forEach(p=>plats.add(p))}
  });
  const legs=(j.plans||[]).filter((p,i)=>byLeg[i]!=null).map(p=>({from:p.from,to:p.to,date:p.date}));
  if(!legs.length){toast('没有失败项可重试','err');return}
  SRX_TASK_BASE=srxTaskMergeRows([]);
- await srxTaskStart({legs,plats:[...plats]},{merge:true,batch:true,keepFilters:true,base:SRX_TASK_BASE});
+ await srxTaskStart({legs,plats:[...plats]},{merge:true,batch:true,keepFilters:true,base:SRX_TASK_BASE,retry:true});
 }
 function srxExitProbe(){
  SRX.probe=null;SRX.probeNames=null;SRX.sel=null;SRX.detailOpen=false;
@@ -16029,10 +16277,29 @@ function srxExitProbe(){
 }
 
 /* ---------- actions ---------- */
-function srxToggleProbe(){const p=$('srxProbe');if(!p)return;const on=!p.classList.contains('open');p.classList.toggle('open',on);const b=$('srxProbeToggle');if(b){b.setAttribute('aria-expanded',on);b.textContent=on?'收起':'展开'}try{localStorage.setItem('jpsrx_probeopen',on?'1':'0')}catch(e){}}
+function srxToggleProbe(){const p=$('srxProbe');if(!p)return;const on=!p.classList.contains('open');p.classList.toggle('open',on);const b=$('srxProbeToggle');if(b){b.setAttribute('aria-expanded',on);b.textContent=on?'收起':'展开'}try{localStorage.setItem('jpsrx_probeopen',on?'1':'0')}catch(e){}srxRenderProbeMini()}
+function srxRenderProbeMini(j){
+ const el=$('srxProbeMini'),p=$('srxProbe');if(!el)return;
+ if(!p||p.classList.contains('open')){el.hidden=true;el.textContent='';return}
+ const f=(($('srxFrom')||{}).value||'').trim(),t=(($('srxTo')||{}).value||'').trim();
+ const d=(($('srxDate')||{}).value||'');
+ const n=document.querySelectorAll('#srxPlatPick input:checked').length;
+ const tk=j||SRX_TASK;
+ const parts=[f&&t?f+'→'+t:'未填航线',d||'未选日期',n+' 渠道'];
+ if(tk){
+  const p0=(tk.plans&&tk.plans[0])||null;
+  if(p0){parts[0]=p0.from_name+'→'+p0.to_name;parts[1]=p0.date}
+  if(tk.plans&&tk.plans.length>1){parts[0]=tk.plans.length+' 条航线/日期';parts[1]=''}
+  if(tk.want&&tk.want.length)parts[2]=tk.want.length+' 渠道';
+  parts.unshift('任务');
+  const st=tk.status==='running'?'采集中':(tk.status==='stopping'?'正在停止':(tk.status==='done'?'已结束':(tk.status==='cancelled'?'已取消':'失败')));
+  parts.push(st+' '+(tk.done||0)+'/'+(tk.total||0)+' · 明细 '+(tk.detail||0)+' · '+(tk.raw||0)+' 原始响应');
+ }else parts.unshift('草稿');
+ el.hidden=false;el.textContent=parts.filter(Boolean).join(' · ');
+}
 function srxOpenCfgRoutes(){switchView('cfg');setTimeout(()=>{try{showCfgPanel('users')}catch(e){}},0)}
 function srxReload(){toast('正在拉取最新真实数据…');load();setTimeout(renderSearch,650)}
-function srxSwitchUser(v){U=+v||0;try{saveUI()}catch(e){}SRX_WATCH.route='';SRX_WATCH.q='';SRX_WATCH.status='';SRX_WATCH.targetState='';SRX_WATCH.channel='';SRX.probe=null;SRX.probeNames=null;SRX.preProbe=null;SRX.sel=null;SRX.detailOpen=false;SRX._init=false;SRX.pair='';SRX.date='';const ex=$('srxExitProbe');if(ex)ex.style.display='none';$('searchview').classList.remove('srx-probe-on');srxProbeStatus(null);render();renderSearch()}
+function srxSwitchUser(v){U=+v||0;try{saveUI()}catch(e){}SRX_WATCH.route='';SRX_WATCH.q='';SRX_WATCH.status='';SRX_WATCH.targetState='';SRX_WATCH.channel='';SRX.probe=null;SRX.probeNames=null;SRX.preProbe=null;SRX.sel=null;SRX.detailOpen=false;SRX._init=false;SRX.pair='';SRX.date='';SRX.plats=[];SRX.q='';SRX.f={...SRX_DEFAULT_F};SRX.agg=false;const ex=$('srxExitProbe');if(ex)ex.style.display='none';$('searchview').classList.remove('srx-probe-on');srxProbeStatus(null);render();renderSearch()}
 function srxOpen(url){if(!/^https?:\/\//i.test(String(url||''))){toast('该行没有可打开的 http(s) 原页深链');return}
  try{const a=document.createElement('a');a.href=url;a.target='_blank';a.rel='noopener';
   document.body.appendChild(a);a.click();a.remove()}
@@ -16064,7 +16331,7 @@ function srxToggleExp(k){SRX.exp=SRX.exp===k?null:k;srxRenderRows()}
 function srxToggleView(){SRX.view=SRX.view==='matrix'?'list':'matrix';srxSave();srxRenderRows()}
 function srxCtxCount(){
  let n=0;
- if(SRX.date)n++;if(SRX.plats.length)n++;if(SRX.q)n++;if(SRX.agg)n++;
+ if(SRX.date&&!srxDateIsSnapshot())n++;if(SRX.plats.length)n++;if(SRX.q)n++;if(SRX.agg)n++;
  Object.keys(SRX.f||{}).forEach(k=>{const v=SRX.f[k];if(v!==''&&v!==false&&v!=null)n++});
  return n;
 }
@@ -16121,7 +16388,7 @@ function srxToggleCtx(){SRX.ctx=!SRX.ctx;srxRenderCtx();
  if(SRX.ctx){const m=$('srxFmore');if(m&&SRX.more)m.classList.add('open')}}
 function srxToggleMore(){SRX.more=!SRX.more;const b=$('srxFmore');if(b)b.classList.toggle('open',SRX.more);const m=$('srxMoreBtn');if(m)m.setAttribute('aria-expanded',SRX.more);if(SRX.more)srxRenderFacets(true)}
 function srxAxis(a){SRX.calAxis=a==='observation'?'observation':'departure';srxSave();srxRenderBand()}
-function srxCalPick(ds){if(!ds)return;const j=SRX_CAL[srxCalKey()];if(SRX.calAxis==='observation'){toast('采集日不是出发日，不能作为查询日','err');return}
+function srxCalPick(ds){if(!ds)return;if(srxDateLock()&&ds!==SRX.date){toast('已提交任务只查询了 '+SRX.date+'；更换日期需发起新查询','err');return}const j=SRX_CAL[srxCalKey()];if(SRX.calAxis==='observation'){toast('采集日不是出发日，不能作为查询日','err');return}
  /* 保留当前 14 天窗口：点某天只换选中行，不把该天重置成窗口首日。 */
  SRX.bandAnchor=(j&&j.anchor)||SRX.bandAnchor||SRX.date;
  SRX.date=ds;SRX.sel=null;SRX.detailOpen=false;
@@ -16138,6 +16405,8 @@ function srxMoreRows(){
  srxRenderRows();
 }
 function srxClearFilters(){SRX.f={...SRX_DEFAULT_F};SRX.q='';SRX.plats=[];SRX.sel=null;SRX.agg=false;SRX.sort='price';SRX.detailOpen=false;const m=$('srxDmask');if(m)m.classList.remove('open');srxResetLocks();srxSave();SRX.limit=SRX_PAGE;srxRenderFacets(true);srxRenderQuick();renderSearch()}
+function srxClearAllFilters(){if(srxDateLock()){srxClearFilters();return}SRX.date='';SRX.bandAnchor='';srxClearFilters()}
+function srxFocusProbe(){const p=$('srxProbe');if(p&&!p.classList.contains('open'))srxToggleProbe();setTimeout(()=>{try{if(p)p.scrollIntoView({block:'nearest'});const f=$('srxFrom');if(f)f.focus({preventScroll:true})}catch(e){}},40)}
 function srxSetFilter(k,v){if(k==='agg'){SRX.agg=!!v}else{SRX.f[k]=v}SRX.limit=SRX_PAGE;srxSave();srxRenderFacets(true);srxRenderQuick();srxRenderAbar();srxRenderKpis();srxRenderRows();srxRenderMirror()}
 function srxFacetClick(btn){
  const f=btn.getAttribute('data-f');if(f)return srxSetFilter(f,btn.getAttribute('data-fv')||'');
@@ -16152,8 +16421,11 @@ function srxTogglePlat(p){
  try{const el=p?document.querySelector('.srx-src[data-src="'+p+'"]'):null;if(el)el.focus({preventScroll:true})}catch(e){}
 }
 function srxHandleAbar(k,v){
- if(k==='__all')return srxClearFilters();
- if(k==='date'){SRX.date='';SRX.bandAnchor='';SRX.sel=null}
+ if(k==='__all')return srxDateLock()?srxClearFilters():srxClearAllFilters();
+ if(k==='date'){
+  if(srxDateLock()){toast('已提交任务的日期是快照，不能作为结果筛选移除；请发起新查询','err');return}
+  SRX.date='';SRX.bandAnchor='';SRX.sel=null
+ }
  else if(k==='plats'){SRX.plats=[];SRX.sel=null}
  else if(k==='q'){SRX.q='';SRX.sel=null}
  else if(k==='agg'){SRX.agg=false}
@@ -16240,14 +16512,20 @@ document.addEventListener('click',ev=>{
  if(t.closest('[data-restore]')){srxRestoreApply();return}
  if(t.closest('[data-bandexpand]')){SRX.bandExpand=true;srxRenderBand();return}
  if(t.closest('[data-restoreoff]')){SRX.restore=null;const rn=$('srxRestoreNote');if(rn)rn.hidden=true;srxSave();return}
- if(t.closest('[data-alldates]')){SRX.date='';SRX.bandAnchor='';SRX.sel=null;SRX._init=true;srxSave();renderSearch();return}
+ if(t.closest('[data-alldates]')){
+  if(srxDateLock()){toast('已提交任务只查询了 '+SRX.date+'；查看其他日期需发起新查询','err');return}
+  SRX.date='';SRX.bandAnchor='';SRX.sel=null;SRX._init=true;srxSave();renderSearch();return}
  if(t.closest('[data-probedate]')){const b=t.closest('[data-probedate]');const ds=b.getAttribute('data-probedate')||SRX.date||'';const di=$('srxDate');if(di)di.value=ds;const po=$('srxProbe');if(po&&!po.classList.contains('open'))srxToggleProbe();setTimeout(()=>{try{$('srxProbe').scrollIntoView({block:'nearest'});$('srxGo').focus({preventScroll:true})}catch(e){}},60);return}
  const src=t.closest&&t.closest('[data-src]');
  if(src){srxTogglePlat(src.getAttribute('data-src'));return}
  const pair=t.closest&&t.closest('[data-pair]');
- if(pair){SRX.pair=pair.getAttribute('data-pair');SRX.date='';SRX.bandAnchor='';SRX.sel=null;SRX.detailOpen=false;SRX.mchPinned=false;SRX._init=false;srxSave();srxEnsure();renderSearch();return}
+ if(pair){
+  if(SRX.probe&&!SRX.probe.batch){toast('已提交任务只请求了当前航线；切换航线需发起新查询','err');return}
+  SRX.pair=pair.getAttribute('data-pair');SRX.date='';SRX.bandAnchor='';SRX.plats=[];SRX.q='';SRX.f={...SRX_DEFAULT_F};SRX.agg=false;SRX.sel=null;SRX.detailOpen=false;SRX.mchPinned=false;SRX._init=false;srxSave();srxEnsure();renderSearch();return}
  const date=t.closest&&t.closest('[data-date]');
- if(date){SRX.date=date.getAttribute('data-date');SRX.bandAnchor='';SRX.sel=null;SRX.detailOpen=false;SRX.mchPinned=false;srxSave();renderSearch();return}
+ if(date){
+  if(srxDateLock()){toast('已提交任务的日期是快照，不能作为结果筛选更换；请发起新查询','err');return}
+  SRX.date=date.getAttribute('data-date');SRX.bandAnchor='';SRX.sel=null;SRX.detailOpen=false;SRX.mchPinned=false;srxSave();renderSearch();return}
  const plat=t.closest&&t.closest('[data-plat]');
  if(plat&&!plat.disabled){srxTogglePlat(plat.getAttribute('data-plat'));return}
  const cal=t.closest&&t.closest('[data-calday]');
@@ -16304,6 +16582,17 @@ $('srxQ').addEventListener('input',()=>{clearTimeout(SRX_SEARCH_T);SRX_SEARCH_T=
 $('srxNoStale').addEventListener('change',()=>{SRX.f.hideStale=$('srxNoStale').checked;SRX.limit=SRX_PAGE;srxSave();srxRenderAbar();srxRenderKpis();srxRenderRows();srxRenderMirror()});
 $('srxOnlyQual').addEventListener('change',()=>{SRX.f.onlyQual=$('srxOnlyQual').checked;SRX.limit=SRX_PAGE;srxSave();srxRenderAbar();srxRenderKpis();srxRenderRows();srxRenderMirror()});
 $('srxSort').addEventListener('change',()=>{SRX.sort=$('srxSort').value;SRX.limit=SRX_PAGE;srxSave();srxRenderRows()});
+document.addEventListener('visibilitychange',()=>{
+ if(!document.hidden&&SRX_TASK&&['running','stopping'].includes(SRX_TASK.status))srxTaskFetch();
+});
+try{
+ const _evb=$('srxTaskEvents');
+ if(_evb)_evb.addEventListener('scroll',()=>{
+  const top=_evb.scrollTop<=4;
+  if(!top&&SRX_TASK_FOLLOW){SRX_TASK_FOLLOW=false;const cb=$('srxTaskEvFollow');if(cb)cb.checked=false;const b=$('srxTaskEvLatest');if(b)b.hidden=false}
+  else if(top&&!SRX_TASK_FOLLOW){SRX_TASK_FOLLOW=true;const cb=$('srxTaskEvFollow');if(cb)cb.checked=true;const b=$('srxTaskEvLatest');if(b)b.hidden=true}
+ },{passive:true});
+}catch(e){}
 $('srxFmore').addEventListener('click',ev=>{const b=ev.target.closest('[data-f]');if(b){srxFacetClick(b);return}const c=ev.target.closest('[data-clear]');if(c)srxClearFilters()});
 $('srxFmore').addEventListener('change',ev=>{
  const t=ev.target;
@@ -16763,6 +17052,29 @@ def _login_state_view() -> dict:
                 "reason": ev.get("auth_reason", ""),
                 "detail_available": detail_at > saved_at and detail_at > auth_at,
             }
+        # 本轮探针真实明细作为即时可用证据，与历史健康同源合并；
+        # 空结果/日历价/超时不会写入这里，也不得反推登录失效。
+        with _PROBE_TASK_LOCK:
+            probe_scopes = json.loads(json.dumps(_PROBE_AUTH.get(p) or {}))
+        for scope, pe in probe_scopes.items():
+            ts = float(pe.get("detail_ts") or 0)
+            cur = scopes.get(scope) or {
+                "needs_login": False, "auth_at": "", "detail_at": "",
+                "reason": "", "detail_available": False,
+            }
+            if ts <= event_time(cur.get("detail_at")):
+                continue
+            auth_at = event_time(cur.get("auth_at"))
+            cur.update({
+                "detail_at": pe.get("detail_at", ""),
+                "detail_available": ts > max(saved_at, auth_at),
+                "needs_login": auth_at > max(saved_at, ts),
+                "probe_count": int(pe.get("detail_count") or 0),
+                "probe_route": (pe.get("from", "") + "→" + pe.get("to", "")),
+                "probe_date": pe.get("date", ""),
+                "source": "probe",
+            })
+            scopes[scope] = cur
         rejected = any(s["needs_login"] for s in scopes.values())
         available = any(s["detail_available"] for s in scopes.values())
         session = _State.login_sessions.get(p) or {}
@@ -17079,6 +17391,20 @@ def _suspended_users(runtime_users, cfg_users):
 
 _PROBE_LOCK = threading.Lock()
 _PROBE_LAST = 0.0
+# 同一轮探针跨腿共享渠道浏览器上限 2；同渠道串行，避免同一 profile
+# 被两个腿同时打开导致登录墙/会话占用（r366 国内腿实测 4 浏览器并发
+# 触发 ctrip/fliggy/tongcheng 登录墙）。
+_PROBE_CHANNEL_GATE = threading.BoundedSemaphore(2)
+_PROBE_PLAT_LOCKS = {}
+_PROBE_PLAT_LOCKS_LOCK = threading.Lock()
+
+
+def _probe_plat_lock(plat):
+    with _PROBE_PLAT_LOCKS_LOCK:
+        lock = _PROBE_PLAT_LOCKS.get(plat)
+        if lock is None:
+            lock = _PROBE_PLAT_LOCKS[plat] = threading.Lock()
+        return lock
 _PROBE_COOLDOWN = 60.0
 
 
@@ -17154,6 +17480,9 @@ def _probe_leg_plan(frm, to, date):
 
 _PROBE_TASKS = {}
 _PROBE_TASK_LOCK = threading.RLock()
+# 探针真实明细是“当前会话在该入口/航线/日期可用”的即时证据；
+# 只记成功明细，空结果/日历价/超时都不得反推登录失效。
+_PROBE_AUTH = {}
 _PROBE_TASK_KEEP = 4
 _PROBE_TASK_TTL = 3600
 
@@ -17196,6 +17525,23 @@ def _probe_task_channel(task, leg, plat, **kw):
         except (KeyError, IndexError):
             return
         task["updated"] = time.time()
+
+
+def _record_probe_auth(plat, scope, detail, frm, to, date):
+    if not detail:
+        return
+    now = time.time()
+    with _PROBE_TASK_LOCK:
+        per = _PROBE_AUTH.setdefault(plat, {})
+        cur = per.get(scope) or {}
+        if now < float(cur.get("detail_ts") or 0):
+            return
+        per[scope] = {
+            "detail_ts": now,
+            "detail_at": time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(now)),
+            "detail_count": int(detail),
+            "from": frm, "to": to, "date": date, "source": "probe",
+        }
 
 
 def _probe_task_add_rows(task, rows):
@@ -17248,7 +17594,9 @@ def _probe_task_view(task_id, rows_from=0):
         cal = sum(int(c.get("cal") or 0)
                   for lg in t["legs"] for c in lg["channels"].values())
         failed = sum(1 for lg in t["legs"] for c in lg["channels"].values()
-                     if c.get("status") in ("error", "timeout"))
+                     if c.get("status") in ("error", "timeout", "parse_error",
+                                            "blocked", "login_required", "challenge",
+                                            "session_busy", "partial"))
         raw_n = sum(int(c.get("raw_n") or 0)
                     for lg in t["legs"] for c in lg["channels"].values())
         return {"ok": True, "id": t["id"], "status": t["status"],
@@ -17265,14 +17613,32 @@ def _probe_task_view(task_id, rows_from=0):
                 "err": t.get("err") or ""}
 
 
-def _probe_start_task(task_id, frm, to, date, legs, plats):
+def _probe_result_status(rows, paths):
+    """把入口证据映射成渠道终态：验证码/登录墙/超时/失败不得写成空结果。"""
+    if rows:
+        bad = any((p.get("status") in ("login", "blocked", "error", "timeout"))
+                  for p in (paths or []))
+        return "partial" if bad else "ok"
+    states = {p.get("status") for p in (paths or [])}
+    if "blocked" in states:
+        return "challenge"
+    if "login" in states:
+        return "login_required"
+    if "timeout" in states:
+        return "timeout"
+    if "error" in states:
+        return "error"
+    return "empty"
+
+
+def _probe_start_task(task_id, frm, to, date, legs, plats, retry=False):
     """后台线程：真实采集，事件/行增量写入 task；异常落 task。"""
     task = _PROBE_TASKS.get(task_id)
     if not task:
         return
     try:
         _probe_search(frm, to, date, plats, legs, task=task,
-                      cancel=task["cancel"])
+                      cancel=task["cancel"], retry=retry)
     except Exception as e:
         cancelled = task["cancel"].is_set()
         with _PROBE_TASK_LOCK:
@@ -17295,7 +17661,8 @@ def _probe_start_task(task_id, frm, to, date, legs, plats):
             msg="已取消" if task["status"] == "cancelled" else "全部子任务已结束")
 
 
-def _probe_search(frm, to, date, plats, legs=None, task=None, cancel=None):
+def _probe_search(frm, to, date, plats, legs=None, task=None, cancel=None,
+                  retry=False):
     """主动探针：任意 OD/日期并发真实渠道采集（不落库、不触发推送）。
 
     legs=[{from,to,date},…] 时一次采集最多 _PROBE_BATCH_MAX 条航线/日期；
@@ -17340,7 +17707,7 @@ def _probe_search(frm, to, date, plats, legs=None, task=None, cancel=None):
     if not want:
         raise ValueError("至少选择一个渠道")
     _now0 = _time.time()
-    if _now0 - _PROBE_LAST < _PROBE_COOLDOWN:
+    if not retry and _now0 - _PROBE_LAST < _PROBE_COOLDOWN:
         raise RuntimeError("探针冷却中，请 %.0fs 后再试" % (_PROBE_COOLDOWN - (_now0 - _PROBE_LAST)))
     if not _PROBE_LOCK.acquire(False):
         raise RuntimeError("已有探针在采集，请稍后再试")
@@ -17354,6 +17721,7 @@ def _probe_search(frm, to, date, plats, legs=None, task=None, cancel=None):
         fc, fn = plan["from"], plan["from_name"]
         tc, tn = plan["to"], plan["to_name"]
         dat = plan["date"]
+        scope = "international" if _is_intl(fc, tc) else "domestic"
         route = {"from": fc, "from_name": fn, "to": tc, "to_name": tn,
                  "dates": [dat]}
         out, channels = [], {}
@@ -17384,6 +17752,7 @@ def _probe_search(frm, to, date, plats, legs=None, task=None, cancel=None):
             c = None
             try:
                 c = _REG[p](crawler_cfg, _State.logger)
+                c.probe_mode = True
 
                 def _on_path(rec, _p=p, _ix=ix, _c=c):
                     if not task:
@@ -17404,15 +17773,25 @@ def _probe_search(frm, to, date, plats, legs=None, task=None, cancel=None):
                         path=rec.get("path"), pathRows=rec.get("rows"))
 
                 c.on_path = _on_path
-                fps = c.fetch(fc, tc, [dat]) or []
-                if cancel is not None and cancel.is_set():
-                    _probe_task_channel(task, ix, p, phase="已取消",
-                                        status="cancelled")
-                    _probe_task_event(task, leg=ix, plat=p, phase="已取消",
-                                      status="cancelled",
-                                      msg="响应返回时任务已取消，不写入结果")
-                    return {"n": 0, "rows": [], "ms": int((_time.time() - t) * 1000),
-                            "status": "cancelled", "detail": 0, "cal": 0}
+                with _PROBE_CHANNEL_GATE:
+                    if cancel is not None and cancel.is_set():
+                        _probe_task_channel(task, ix, p, phase="已取消",
+                                            status="cancelled")
+                        _probe_task_event(task, leg=ix, plat=p, phase="已取消",
+                                          status="cancelled",
+                                          msg="排队等待时任务已取消")
+                        return {"n": 0, "rows": [], "ms": int((_time.time() - t) * 1000),
+                                "status": "cancelled", "detail": 0, "cal": 0}
+                    with _probe_plat_lock(p):
+                        if cancel is not None and cancel.is_set():
+                            _probe_task_channel(task, ix, p, phase="已取消",
+                                                status="cancelled")
+                            _probe_task_event(task, leg=ix, plat=p, phase="已取消",
+                                              status="cancelled",
+                                              msg="同渠道排队时任务已取消")
+                            return {"n": 0, "rows": [], "ms": int((_time.time() - t) * 1000),
+                                    "status": "cancelled", "detail": 0, "cal": 0}
+                        fps = c.fetch(fc, tc, [dat]) or []
                 _probe_task_channel(task, ix, p, phase="解析中",
                                     status="running")
                 _probe_task_event(task, leg=ix, plat=p, phase="解析明细",
@@ -17498,6 +17877,8 @@ def _probe_search(frm, to, date, plats, legs=None, task=None, cancel=None):
                         break
                 det = sum(1 for x in rows if not x.get("isCal"))
                 cal = len(rows) - det
+                if det > 0:
+                    _record_probe_auth(p, scope, det, fc, tc, dat)
                 items_n = 0
                 for _fp in fps:
                     try:
@@ -17505,18 +17886,20 @@ def _probe_search(frm, to, date, plats, legs=None, task=None, cancel=None):
                         items_n += len(_obj) if isinstance(_obj, list) else 1
                     except Exception:
                         items_n += 1
+                paths = list(getattr(c, "paths", []) or [])
+                result_status = _probe_result_status(rows, paths)
                 _probe_task_event(
-                    task, leg=ix, plat=p, phase="解析完成", status="ok",
+                    task, leg=ix, plat=p, phase="解析完成", status=result_status,
                     msg="渠道记录 %d · 有效 %d（明细 %d / 日历 %d）"
                         % (len(fps), len(rows), det, cal),
                     n=len(rows), detail=det, cal=cal,
                     raw_n=len(fps), items_n=items_n)
                 return {"n": len(rows), "rows": rows,
                         "ms": int((_time.time() - t) * 1000),
-                        "status": "ok" if rows else "empty",
+                        "status": result_status,
                         "detail": det, "cal": cal,
                         "raw_n": len(fps), "items_n": items_n,
-                        "paths": list(getattr(c, "paths", []) or []),
+                        "paths": paths,
                         "truncated": len(rows) >= leg_cap}
             except Exception as e:
                 _probe_task_event(task, leg=ix, plat=p, phase="失败",
@@ -17558,11 +17941,11 @@ def _probe_search(frm, to, date, plats, legs=None, task=None, cancel=None):
                             lastStatus=(r.get("paths") or [{}])[-1].get("status")
                             if r.get("paths") else None,
                             err=r.get("err", ""))
-                        if not _cancelled:
-                            _probe_task_add_rows(task, r.get("rows") or [])
+                        # 已返回的明细即使在取消后也必须保留，不能丢已完成结果。
+                        _probe_task_add_rows(task, r.get("rows") or [])
                         _probe_task_event(
                             task, leg=ix, plat=p, phase="渠道结束",
-                            status=r.get("status"), n=r.get("n"),
+                            status="cancelled" if _cancelled else r.get("status"), n=r.get("n"),
                             detail=r.get("detail", 0), cal=r.get("cal", 0),
                             ms=r.get("ms"), msg=r.get("err", ""))
             except _cf.TimeoutError:
@@ -21124,7 +21507,8 @@ class _Handler(BaseHTTPRequestHandler):
                 if not _want:
                     raise ValueError("至少选择一个渠道")
                 import time as _t
-                if _t.time() - _PROBE_LAST < _PROBE_COOLDOWN:
+                _retry = bool(body.get("retry"))
+                if not _retry and _t.time() - _PROBE_LAST < _PROBE_COOLDOWN:
                     self._json({"ok": False, "err": "探针冷却中"}, 409)
                     return
                 if _PROBE_LOCK.locked():
@@ -21155,7 +21539,7 @@ class _Handler(BaseHTTPRequestHandler):
                 threading.Thread(
                     target=_probe_start_task,
                     args=(_tid, body.get("from"), body.get("to"),
-                          body.get("date"), _raw, _want),
+                          body.get("date"), _raw, _want, _retry),
                     daemon=True).start()
                 self._json({"ok": True, "task": _probe_task_view(_tid)})
             except ValueError as e:

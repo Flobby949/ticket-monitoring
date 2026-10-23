@@ -78,6 +78,11 @@ class CtripCrawler(BaseCrawler):
     # 机场码先归并城市码（NRT→TYO），与日历端点同口径。
     URL_LIST_INTL = ("https://flights.ctrip.com/online/list/"
                      "oneway-{from_city}-{to_city}?depdate={date}")
+    # 国内 PC 列表：H5 taro 列表在部分日期只给日历/空壳，
+    # flights.ctrip.com 国内 batchSearch 仍是真实行程来源。
+    URL_LIST_DOM = ("https://flights.ctrip.com/online/list/"
+                    "oneway-{from_city}-{to_city}?depdate={date}"
+                    "&cabin=y_s_c_f&adult=1&child=0&infant=0")
 
     # 仅认航班列表接口；LowestPriceSearch 是跨日期低价日历，会混入其他日期价格
     XHR_KEYS = [
@@ -86,6 +91,7 @@ class CtripCrawler(BaseCrawler):
 
     # PC 国际列表分页/增量：batchSearch 首批全量，pull 为滚动补量
     XHR_KEYS_INTL_LIST = [
+        "batchSearch",
         "international/search/api/search/batchSearch",
         "international/search/api/search/pull/",
     ]
@@ -209,6 +215,17 @@ class CtripCrawler(BaseCrawler):
                                    detail=str(e)[:120],
                                    ms=int((time.time() - t_h5) * 1000))
                 self._sleep()
+        # H5 列表缺日时补国内 PC 列表；H5 已出数的日期不重复请求。
+        missing = [d for d in dates if d not in {r.depart_date for r in results}]
+        if missing:
+            try:
+                self.logger.info("[ctrip][dom] H5 缺 %d 日，补 PC 列表: %s",
+                                 len(missing), ",".join(missing))
+                results.extend(self._fetch_intl_list(
+                    from_city, to_city, from_city, to_city, missing,
+                    url_tpl=self.URL_LIST_DOM, label="国内"))
+            except Exception as e:
+                self.logger.warning("[ctrip][dom] PC 列表补采失败: %s", e)
         return results
 
     @staticmethod
@@ -245,8 +262,8 @@ class CtripCrawler(BaseCrawler):
         return results
 
     def _fetch_intl_list(self, from_city: str, to_city: str,
-                         fc: str, tc: str,
-                         dates: List[str]) -> List[FlightPrice]:
+                         fc: str, tc: str, dates: List[str],
+                         url_tpl: str = "", label: str = "国际") -> List[FlightPrice]:
         """PC 国际列表：batchSearch/pull 捕获 → 行程行解析。
 
         profile 未登录时 data.needUserLogin=true 且无行程——置
@@ -273,7 +290,7 @@ class CtripCrawler(BaseCrawler):
                 page = self.new_page(ctx)
                 captured = self.attach_xhr_collector(
                     page, self.XHR_KEYS_INTL_LIST)
-                url = self.URL_LIST_INTL.format(
+                url = (url_tpl or self.URL_LIST_INTL).format(
                     from_city=fc.lower(), to_city=tc.lower(), date=date)
                 self.logger.info("[ctrip][intl] GET %s", url)
                 t_pc = time.time()
@@ -362,7 +379,7 @@ class CtripCrawler(BaseCrawler):
                         continue
                     CtripCrawler.login_suspect = False
                     self.path_note("PC", "ok", rows=len(flights), date=date,
-                                   detail="flights.ctrip.com 国际列表",
+                                   detail="flights.ctrip.com %s列表" % label,
                                    ms=int((time.time() - t_pc) * 1000))
                     best = min(flights, key=lambda f: f["price"])
                     results.append(FlightPrice(

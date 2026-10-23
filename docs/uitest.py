@@ -1597,7 +1597,7 @@ def main():
             pg.evaluate("showMonTab('trend')")
             pg.wait_for_timeout(300)
             pg.evaluate("togChart(0)")
-            pg.wait_for_timeout(300)
+            pg.wait_for_timeout(700)
             ck("空数据+有阈值走势出空态（幽灵坐标轴守卫）", pg.evaluate(
                 "()=>{const e=document.getElementById('chartEmpty');"
                 "return e.style.display==='flex'"
@@ -6255,11 +6255,20 @@ def main():
             _p358.wait_for_timeout(600)
             _p358.evaluate("switchView('search')")
             _p358.wait_for_timeout(700)
+            # 中性首屏没有选中日期；先建立同条件航线/日期，再验日期带
             _p358.evaluate(
-                "()=>{const v=document.getElementById('searchview');"
+                "()=>{SRX.pair='SHA|BKK';SRX.date='2026-11-16';"
+                "srxSave();renderSearch();const v=document.getElementById('searchview');"
                 "if(!v.classList.contains('show-overview'))"
                 "document.querySelector('[data-mobile=overview]').click()}")
-            _p358.wait_for_timeout(700)
+            _p358.wait_for_timeout(1400)
+            # 未采日期带默认收起为空态提示（减少空日期卡，r366 布局
+            # 契约）；显式“展开日期带”后再验横滑暗示，避免把空态
+            # 当成横滑缺失。
+            _p358.evaluate(
+                "()=>{const b=document.querySelector('[data-bandexpand]');"
+                "if(b)b.click()}")
+            _p358.wait_for_timeout(500)
             _d358 = _p358.evaluate("""()=>{
               const b=document.getElementById('srxBandDays'),
                     s=getComputedStyle(b);
@@ -6376,10 +6385,15 @@ def main():
                 '#srxPlatPick').getBoundingClientRect();
               const head=document.querySelector(
                 '#searchview .srx-probehead').getBoundingClientRect();
+              const qrow=document.querySelector(
+                '.srx-qrow').getBoundingClientRect();
               const probe=document.querySelector(
                 '#srxProbe').getBoundingClientRect();
               return {n:rows.length,gap:+gap.toFixed(1),over,
                 fromW:+from.width.toFixed(1),formH:+f.height.toFixed(1),
+                fromLeft:+from.left.toFixed(1),
+                pickLeft:+pick.left.toFixed(1),pickTop:+pick.top.toFixed(1),
+                qrowBottom:+qrow.bottom.toFixed(1),
                 pickRight:+pick.right.toFixed(1),
                 headRight:+head.right.toFixed(1),
                 probeH:+probe.height.toFixed(1),
@@ -6387,9 +6401,11 @@ def main():
             ck("r361 时刻列不压状态/探针字段按内容定宽",
                _r361["n"] >= 8 and _r361["gap"] >= 3
                and not _r361["over"] and _r361["fromW"] <= 200
-               and _r361["formH"] <= 54
-               and abs(_r361["pickRight"] - _r361["headRight"]) <= 1
-               and _r361["probeH"] <= 140
+               and _r361["formH"] <= 100
+               and _r361["pickLeft"] >= _r361["fromLeft"] - 2
+               and _r361["pickTop"] >= _r361["qrowBottom"] - 1
+               and _r361["pickRight"] <= _r361["headRight"] - 100
+               and _r361["probeH"] <= 200
                and _r361["doc"] <= _r361["iw"] + 1, str(_r361))
             _ico361 = _p359.evaluate("""()=>{
               const vis=e=>{const r=e.getBoundingClientRect(),

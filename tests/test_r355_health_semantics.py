@@ -128,11 +128,10 @@ def test_search_kpi_separates_fallback_from_anomaly():
     start = src.index("function srxRenderKpis(){")
     end = src.index("function srxRenderChips(){", start)
     block = src[start:end]
-    assert "补位行" in block
-    # 补位行不再被当作「异常」主数字；异常只保留孤低价/离群。
+    # 补位/异常降为 KPI 次级行，不再各占一张零值主卡。
+    assert "补位 " in block and "fallback" in block and "bad" in block
     assert "k('异常'" not in block
-    assert "fallback" in block and "bad" in block
-    assert "上轮有效 · 含日历" in block
+    assert "srx-kpi-sub" in block and "本次明细" in block
 
 
 def test_read_log_tail_keeps_oldest_line_beyond_2mb_tail(tmp_path, monkeypatch):

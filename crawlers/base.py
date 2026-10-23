@@ -95,6 +95,8 @@ class BaseCrawler:
         self.config = config
         self.logger = logger
         self.headless: bool = config.get("headless", True)
+        # 用户主动探针可复用可见会话取明细；定时监控不弹窗。
+        self.probe_mode: bool = False
         self.timeout_ms: int = int(config.get("timeout_seconds", 45)) * 1000
         self.delay_min: float = float(config.get("delay_min", 2))
         self.delay_max: float = float(config.get("delay_max", 5))
