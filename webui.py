@@ -20326,6 +20326,18 @@ def _latest_state_snap():
     _latest_state()
     with _STATE_LOCK:
         body = _STATE_CACHE["body"]
+        # 下一轮时间独立于票价缓存：空扫描/失败扫描未写库时，旧时间
+        # 会一直命中相同 ETag，前端到点后永久显示「扫描中」。只更新
+        # 轻量调度字段和响应三元组，不为此重算整份航班历史。
+        if not DEMO["on"]:
+            next_run = _next_run()
+            if _STATE_CACHE["payload"].get("next_run") != next_run:
+                payload = dict(_STATE_CACHE["payload"], next_run=next_run)
+                body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
+                _STATE_CACHE.update(
+                    payload=payload, body=body,
+                    etag='"%s"' % hashlib.md5(body).hexdigest(),
+                    gz=gzip.compress(body, 6))
         if body is None:
             body = json.dumps(_STATE_CACHE["payload"],
                               ensure_ascii=False).encode("utf-8")
