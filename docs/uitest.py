@@ -6398,13 +6398,13 @@ def main():
                 headRight:+head.right.toFixed(1),
                 probeH:+probe.height.toFixed(1),
                 doc:document.documentElement.scrollWidth,iw:innerWidth}}""")
-            ck("r361 时刻列不压状态/探针字段按内容定宽",
+            ck("r361 时刻列不压状态/探针字段按内容定宽/宽屏渠道片同排右对齐",
                _r361["n"] >= 8 and _r361["gap"] >= 3
                and not _r361["over"] and _r361["fromW"] <= 200
                and _r361["formH"] <= 100
                and _r361["pickLeft"] >= _r361["fromLeft"] - 2
-               and _r361["pickTop"] >= _r361["qrowBottom"] - 1
-               and _r361["pickRight"] <= _r361["headRight"] - 100
+               and _r361["pickTop"] < _r361["qrowBottom"]
+               and abs(_r361["pickRight"] - _r361["headRight"]) <= 2
                and _r361["probeH"] <= 200
                and _r361["doc"] <= _r361["iw"] + 1, str(_r361))
             _ico361 = _p359.evaluate("""()=>{
@@ -6583,6 +6583,76 @@ def main():
                _d359b["w"] > 120 and _d359b["sameRow"]
                and not _d359b["over"], str(_d359b))
             _c359.close()
+
+            # goal: 关注航线/关注航班曲线与检索/明细筛选统一
+            pg.set_viewport_size({"width": 1440, "height": 900})
+            pg.evaluate("switchView('mon');showMonTab('overview')")
+            pg.wait_for_timeout(800)
+            _u = pg.evaluate("""()=>({
+              routeCard:getComputedStyle(document.querySelector('#monRouteCard')).display!=='none',
+              routes:document.querySelectorAll('#monRouteList .monroute').length,
+              routeSvg:document.querySelectorAll('#monRouteList .monroute svg').length,
+              watchCard:getComputedStyle(document.querySelector('#monWatchCard')).display!=='none',
+              watchSvg:document.querySelectorAll('#monWatchList .monwatch svg').length})""")
+            ck("goal 关注航线卡与共享迷你曲线",
+               _u["routeCard"] and _u["routes"] > 0 and _u["routeSvg"] > 0, str(_u))
+            ck("goal 关注航班卡与独立迷你曲线",
+               _u["watchCard"] and _u["watchSvg"] > 0, str(_u))
+            pg.evaluate("showMonTab('watch')")
+            pg.wait_for_timeout(2200)
+            _ws = pg.evaluate("""()=>({
+              scope:document.querySelector('#wsRouteWatch')?.innerText||'',
+              spark:document.querySelectorAll('#wsRouteWatch .ws-rwspark svg').length})""")
+            ck("goal 关注台独立过滤摘要", "关注航班独立过滤同一份本地落库数据" in _ws["scope"], str(_ws["scope"][:80]))
+            ck("goal 关注台航线共享曲线", _ws["spark"] > 0, str(_ws))
+            pg.evaluate("switchView('search')")
+            pg.wait_for_timeout(1200)
+            pg.evaluate("document.querySelector('#srxFilterBtn').click()")
+            pg.wait_for_timeout(200)
+            pg.evaluate("document.querySelector('#srxMoreBtn').click()")
+            pg.wait_for_timeout(350)
+            _sf = pg.evaluate("""()=>({
+              common:!!document.querySelector('#srxFmore .srx-fcommon'),
+              depA:!!document.querySelector('#srxFmore select[data-fs=depA]'),
+              shareMode:!!document.querySelector('#srxFmore select[data-fs=shareMode]'),
+              detailFields:document.querySelectorAll('#srxFmore [data-fn=laymin],#srxFmore [data-fn=durmin],#srxFmore [data-fn=prate],#srxFmore [data-fn=age],#srxFmore [data-fn=bagkg]').length,
+              clear:!!document.querySelector('#srxFmore [data-fclear=common]')})""")
+            ck("goal 检索共同筛选组", _sf["common"] and _sf["depA"] and _sf["shareMode"], str(_sf))
+            ck("goal 检索明细级超集字段", _sf["detailFields"] >= 5 and _sf["clear"], str(_sf))
+            pg.evaluate("""()=>{SRX.f.hasView=true;SRX.f.laymin=60;srxClearCommonFilters()}""")
+            _sc = pg.evaluate("()=>({laymin:SRX.f.laymin,hasView:!!SRX.f.hasView})")
+            ck("goal 共同筛选清理保留检索特有", _sc["laymin"] == 0 and _sc["hasView"] is True, str(_sc))
+            pg.evaluate("switchView('mon');showMonTab('details')")
+            pg.wait_for_timeout(900)
+            pg.evaluate("document.querySelector('#fltBtn').click()")
+            pg.wait_for_timeout(250)
+            pg.evaluate("togMoreFlt()")
+            pg.wait_for_timeout(250)
+            _df = pg.evaluate("""()=>({
+              scope:document.querySelector('.fltscope')?.innerText||'',
+              share:!!document.querySelector('#fshareonly'),
+              hideCal:!!document.querySelector('#fhidecal'),
+              onlyQual:!!document.querySelector('#fonlyqual')})""")
+            ck("goal 明细共同能力入口", "共同筛选" in _df["scope"] and _df["share"] and _df["hideCal"] and _df["onlyQual"], str(_df))
+            pg.set_viewport_size({"width": 1360, "height": 900})
+            pg.evaluate("switchView('search')")
+            pg.wait_for_timeout(1000)
+            pg.evaluate("""()=>{const p=document.querySelector('#srxProbe');
+              if(p&&!p.classList.contains('open'))srxToggleProbe()}""")
+            pg.wait_for_timeout(350)
+            _pr = pg.evaluate("""()=>{const R=s=>{const e=document.querySelector(s);if(!e)return null;const r=e.getBoundingClientRect();return{r:+r.right.toFixed(1),h:+r.height.toFixed(1),b:+r.bottom.toFixed(1)}};
+              return{head:R('#srxProbe .srx-probehead'),form:R('#srxProbe .srx-probeform'),acts:R('#srxProbe .srx-probeacts'),
+               go:R('#srxGo'),date:R('#srxDate'),pick:R('#srxPlatPick'),
+               overflow:document.documentElement.scrollWidth>innerWidth+1}}""")
+            ck("goal 探针头部单行对齐", _pr["head"]["h"] <= 30 and _pr["acts"]["r"] == _pr["head"]["r"] and not _pr["overflow"], str(_pr))
+            ck("goal 探针表单紧凑", _pr["form"]["h"] <= 54, str(_pr))
+            ck("goal 探针提交与输入同基线", abs(_pr["go"]["b"] - _pr["date"]["b"]) <= 1 and _pr["pick"]["h"] <= 32, str(_pr))
+            _pair = pg.evaluate("""()=>{const all=(S.users[0]||{}).flights||[];const f=all.find(x=>x.intl&&x.from&&x.to);return f?f.from+'|'+f.to:''}""")
+            if _pair:
+                pg.evaluate("p=>{SRX.pair=p;SRX.date='';SRX._init=true;renderSearch()}", _pair)
+                pg.wait_for_timeout(800)
+            _cb = pg.evaluate("""()=>{const e=document.querySelector('#srxCapbar');if(!e||e.hidden)return null;const r=e.getBoundingClientRect();return{h:+r.height.toFixed(1),chips:e.querySelectorAll('.capchip').length,text:e.innerText.slice(0,120),scroll:e.scrollWidth>e.clientWidth}}""")
+            ck("goal 渠道/会话单行不换行", bool(_cb) and _cb["h"] <= 40 and _cb["chips"] == 5 and "会话" not in _cb["text"], str(_cb))
 
             bad0 = [n for n, v in checks if not v]
             prog.write("JS 错误: %s\n" % (errors[:3] if errors else "无"))

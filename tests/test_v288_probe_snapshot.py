@@ -77,7 +77,7 @@ def test_neutral_first_entry_does_not_restore_query():
 
 def test_batch_incremental_does_not_reset_user_scope():
     src = webui.PAGE
-    assert "if(!prev){" in src
+    assert "if(!prev&&!opt.keepScope){" in src
     assert "if(SRX.probe.batch){SRX.pair='';SRX.date=''}" in src
 
 
@@ -251,3 +251,23 @@ def test_retry_bypasses_probe_cooldown():
     assert "retry=retry" in src2
     assert "retry:true" in webui.PAGE
     assert "o.retry)_p.retry=true" in webui.PAGE
+
+
+def test_audit_fixes_counts_filters_status_and_exit():
+    src = webui.PAGE
+    # other-date count must honor result channel filter
+    assert "base.filter(f=>ps.has(f.platKey)&&(!SRX.date||f.date!==SRX.date))" in src
+    # filter-empty must be evaluated before fallback-only
+    i_filter = src.index("kind:'filter',title:'筛选无结果'")
+    i_fallback = src.index("kind:'fallback',title:'仅有日历/补位参考")
+    assert i_filter < i_fallback
+    # task channel status must preserve login/blocked severity, not collapse to ok
+    assert "login_required:5,blocked:5,challenge:5" in src
+    # retry must keep submitted scope and batch view
+    assert "keepScope:!!o.merge,forceBatch:!!o.merge" in src
+    assert "if(!prev&&!opt.keepScope)" in src
+    # exiting probe stops polling and closes the probe panel
+    assert "function srxExitProbe(){\n srxTaskStop();" in src
+    assert "_pp.classList.remove('open')" in src
+    # session chip must not claim recent detail while current run is rejected
+    assert "会话 本次需登录" in src

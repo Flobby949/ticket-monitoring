@@ -114,6 +114,29 @@ def test_finish_login_sets_pending_window():
         webui._State.login_pending = old_pending
 
 
+def test_newer_login_rejection_ends_pending_window(monkeypatch):
+    """点「登录完成」后只有**新的**明确拒绝才能结束待验证窗；旧拒绝
+    证据不得把刚点的登录瞬间打回「建议重登」。"""
+    import time
+    from datetime import datetime
+    import webui
+    old_pending = dict(webui._State.login_pending)
+    try:
+        webui._State.login_pending["qunar"] = time.time() - 30
+        monkeypatch.setattr(
+            webui, "_health_state",
+            lambda hours: {"evidence": {"qunar": {"domestic": {
+                "auth_at": datetime.now().isoformat(timespec="seconds"),
+                "detail_at": "", "auth_reason": "需登录"}}}})
+        monkeypatch.setattr(webui, "_PROBE_AUTH", {})
+        monkeypatch.setattr(webui._State, "login_sessions", {})
+        v = webui._login_state_view()["plats"]["qunar"]
+        assert v["pending"] is False, "新拒绝应结束待验证窗"
+        assert v["status"] == "login_required"
+    finally:
+        webui._State.login_pending = old_pending
+
+
 def test_login_pending_wording_in_page():
     """前端过渡词面钉：pending 窗内显示「验证中」不再说「建议重登」；
     登录窗口开着（active）时词面优先「登录中…」——登录中却说「建议

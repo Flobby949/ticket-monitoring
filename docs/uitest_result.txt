@@ -455,7 +455,7 @@ WC-P2-2 诊断: sh=rgb(11, 98, 214) 0px 0px 0px 2px active=true items=4
  ✓ touchcancel 手势接管全清（十字线不滞留）
  ✓ 同点二次 tap 放行跳明细（双拍跳转路径不回归）
  … r283v 图例首屏与搜索态导航
- ✓ 375 图例补位行首屏可达（预设行后，免滚动）（disp=block top=603 h=36 vh=812 fb=fbar open chips=5/7 scrollY=0）
+ ✓ 375 图例补位行首屏可达（预设行后，免滚动）（disp=block top=624 h=36 vh=812 fb=fbar open chips=5/7 scrollY=0）
  ✓ 配置搜索态左导航高亮降饱和（暂态去处语义）
  ✓ 搜索清空后左导航高亮满饱和回归
  … 吸顶切换器滚轮横滚
@@ -499,7 +499,7 @@ WC-P2-2 诊断: sh=rgb(11, 98, 214) 0px 0px 0px 2px active=true items=4
  ✓ W2 390 零新增横滚（溢出 -10px）
  ✓ W3 toast word-break=normal+overflow-wrap=anywhere（实测 normal/anywhere）
  ✓ W4 Esc 关抽屉焦点归还 fltBtn（实测 fltBtn）
- ✓ T1 demo 倒计时 chip 可见（实测 ⏱ 下轮 11:29（2 分/flex）
+ ✓ T1 demo 倒计时 chip 可见（实测 ⏱ 下轮 12:17（2 分/flex）
  ✓ R1a hdmeta 560 带独占行（flexBasis=100%）
  ✓ R1b 560 带页面零横滚（sw=550 cw=560）
  ✓ R1c 620 带回单行（flexBasis=auto）
@@ -644,12 +644,24 @@ WC-P2-2 诊断: sh=rgb(11, 98, 214) 0px 0px 0px 2px active=true items=4
  ✓ r358 1024 详情关闭钮贴右缘/动作第二行
  ✓ r358 健康日志轮次/渠道与格一致
  ✓ r360 检索页微字/五源条/可用渠道优先
- ✓ r361 时刻列不压状态/探针字段按内容定宽
+ ✓ r361 时刻列不压状态/探针字段按内容定宽/宽屏渠道片同排右对齐
  ✓ r361 检索页图标与文案零相交
  ✓ r361 关注卡渠道图标/图例不重叠
  ✓ r361 价带点日不重置窗口/可前后翻
  ✓ r359 起降时刻左缘对齐
  ✓ r359 日期字段内容定宽/整字段唤起
  ✓ r359 390 日期字段与加入按钮同排
+ ✓ goal 关注航线卡与共享迷你曲线
+ ✓ goal 关注航班卡与独立迷你曲线
+ ✓ goal 关注台独立过滤摘要
+ ✓ goal 关注台航线共享曲线
+ ✓ goal 检索共同筛选组
+ ✓ goal 检索明细级超集字段
+ ✓ goal 共同筛选清理保留检索特有
+ ✓ goal 明细共同能力入口
+ ✓ goal 探针头部单行对齐
+ ✓ goal 探针表单紧凑
+ ✓ goal 探针提交与输入同基线
+ ✓ goal 渠道/会话单行不换行
 JS 错误: 无
-=== 602/602 通过 ===
+=== 614/614 通过 ===

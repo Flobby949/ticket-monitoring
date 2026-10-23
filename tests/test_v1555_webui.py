@@ -83,7 +83,8 @@ class TestWebuiV1555Pins:
         # +3 对、矩阵身份格 fname/fsub +1 对 = 977/977；v285 任务面板
         # （panel/sum/body/legs/evbar/events）+6 对、恢复条 +1 对 = 984/984
         # （运行期任务行/事件模板另计，不在 PAGE 字面）
-        assert (o, c, o - c) == (993, 993, 0)
+        # goal 关注航线卡 4 对 + 共享曲线容器 + 整合树探针标记 = 1003/1003
+        assert (o, c, o - c) == (1003, 1003, 0)
 
     def test_dingtalk_card_closed_before_ntfy(self):
         """钉钉卡闭合补钉字面在位，且位于 ntfy 卡开标签之前（顺序钉死）。"""

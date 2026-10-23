@@ -68,7 +68,7 @@ def test_p2d_letter_spacing_two_tier_tokens():
     # r340 生产检索页新增 7 处微签（eyebrow/live/lab/kpi/thead/dlab/prov）
     # → 23；r340b 三重对齐表头再 +1 → 24；r348 探针字段/城市分组 +2 → 26；
     # r351 关注航班配置/清单微签 +6 → 32（新增微签不得裸写 px 字距）
-    assert s.count("letter-spacing:var(--ls1)") == 37  # r352 关注台/试看/K线微签 +6
+    assert s.count("letter-spacing:var(--ls1)") == 39  # goal 关注航线/筛选共同组微签 +2
     # --ls2 消费四处：装饰英文签两处（.seclab .en / .grouplab .en）
     # + r273 收编的两处 15px 展示签（.pvbody .md-g 主站 / .md .g notify）
     assert s.count("letter-spacing:var(--ls2)") == 4
