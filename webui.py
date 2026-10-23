@@ -20590,10 +20590,11 @@ def _log_tail(plat: str, ts: str) -> dict:
 
 
 class _Srv(ThreadingHTTPServer):
-    """禁用地址复用：Windows 上 SO_REUSEADDR 允许同端口双绑静默影身
+    """Windows 禁用地址复用：SO_REUSEADDR 允许同端口双绑静默影身
     （僵尸控制台持端口、新实例起在同端口却收不到连接——LESSONS 十.4
-    双实例坑的放大器）。绑定失败应当场报错，而不是假装启动成功。"""
-    allow_reuse_address = False
+    双实例坑的放大器）。POSIX 允许复用 TIME_WAIT 地址以支持立即重启，
+    仍拒绝绑定正在监听的端口。"""
+    allow_reuse_address = os.name != "nt"
     daemon_threads = True
 
     def handle_error(self, request, client_address):
